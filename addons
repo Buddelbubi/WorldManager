@@ -91,16 +91,16 @@
       "description": "&7MultiNether is a plugin by the plugin developer PetteriM1.\nMultiNether allows you to have multiple nether worlds linked to different overworld worlds.\nJust add world names into the list in config.yml and new nether worlds will be generated for them on next server startup. For all other worlds the default nether world is used.\nThis plugin also adds some improvements to Nukkit's portal creation behavior."
     }
   },
-  "homemade": {
+  "buddelbubis_selfmade_addons": {
     "WorldSigns": "textures/ui/icon_sign.png",
     "WorldPlayerLimits": "textures/ui/Ping_Green_Dark.png",
     "WorldWhitelist": "textures/ui/creative_icon.png",
     "settings": {
-        "name": "Buddelbubi's Selfmade Addons",
+        "name": "Buddelbubis Selfmade Addons",
         "thumbnail": "textures/ui/xbox_face_button_right.png"
     }
   },
-  "generator": {
+  "generators": {
     "TheEnd": "textures/blocks/end_portal.png",
     "QuasiStructurePopulator": "textures/blocks/mob_spawner.png",
     "BetterVanillaGenerator": "textures/ui/default_world.png",
@@ -116,7 +116,7 @@
         "thumbnail": "textures/ui/world_glyph_color.png"
     }
   },
-  "edit": {
+  "editing": {
     "SimpleWorldEdit": "textures/items/gold_axe.png",
     "FastAsyncWorldEdit": "textures/items/wood_axe.png",
     "DBLib": "textures/ui/servers.png",
@@ -125,7 +125,7 @@
         "thumbnail": "textures/items/wood_axe.png"
     }
   },
-  "teleport": {
+  "teleportation": {
     "WorldSigns": "textures/ui/icon_sign.png",
     "MultiNether": "textures/ui/NetherPortalMirror.png",
     "PerWorldInventory": "textures/ui/inventory_icon.png",
