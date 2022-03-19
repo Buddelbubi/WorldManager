@@ -1,12 +1,7 @@
 package de.buddelbubi;
 
 import java.io.File;
-
-
 import cn.nukkit.Server;
-
-
-
 import cn.nukkit.command.Command;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
