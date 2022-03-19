@@ -36,7 +36,6 @@ public class WorldManager extends PluginBase {
 		getServer().getCommandMap().register(command.getName(), command);
 		getServer().getPluginManager().registerEvents(new Events(), plugin);
 		getServer().getPluginManager().registerEvents(new WorldManagerUI(), plugin);
-		//getServer().getPluginManager().registerEvents(new Addons(), plugin);
 		getServer().getPluginManager().registerEvents(new Addons(), plugin);
 		LoadWorlds.loadWorlds();
 		AliasManager.registerAliases();
@@ -52,7 +51,7 @@ public class WorldManager extends PluginBase {
 		
 		Updater.checkAndDoUpdateIfAvailable();
 		
-		Server.getInstance().getLogger().info("§bWorldManager v" + plugin.getDescription().getVersion() + " loaded successfully");
+		Server.getInstance().getLogger().info("Â§bWorldManager v" + plugin.getDescription().getVersion() + " loaded successfully");
 		
 	}
 	
