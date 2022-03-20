@@ -1,8 +1,6 @@
 package de.buddelbubi.api;
 
 import java.io.File;
-
-
 import cn.nukkit.Server;
 import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
@@ -18,6 +16,7 @@ public class World {
 	private boolean fly;
 	private boolean protect;
 	private String note;
+	
 	
 	public World(Level level) {
 		

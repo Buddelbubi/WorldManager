@@ -8,7 +8,6 @@ public class AliasManager extends Command {
 
 	public AliasManager(String name) {
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

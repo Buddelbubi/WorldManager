@@ -29,19 +29,15 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.utils.Config;
 
 
+// This metrics class is unusable unless your plugin got a entry in the hidden "other" section! 
+
+
 public class Metrics {
 
   private final Plugin plugin;
 
   private final MetricsBase metricsBase;
 
-  /**
-   * Creates a new Metrics instance.
-   *
-   * @param plugin Your plugin instance.
-   * @param serviceId The id of the service. It can be found at <a
-   *     href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
-   */
   public Metrics(Plugin plugin, int serviceId) {
 	  
 	Server.getInstance().getLogger().info("bStats Metrics loaded");
@@ -63,9 +59,7 @@ public class Metrics {
       config.save(configFile);
     }
     // Load the data
-    boolean enabled = true; //config.getBoolean("enabled", true); 
-    
-    //Yea.. I removed the ability to disable bStats for my Plugins... I just love statistics so much <3
+    final boolean enabled = true;
     
     String serverUUID = config.getString("serverUuid");
     boolean logErrors = config.getBoolean("logFailedRequests", false);
@@ -99,8 +93,11 @@ public class Metrics {
 
   private void appendPlatformData(JsonObjectBuilder builder) {
 	  
+	// Unused because everything is handled in CustomMetricsManager.java
 	  
-   /* builder.appendField("playerAmount", getPlayerAmount());
+	/* Default code
+	
+	builder.appendField("playerAmount", getPlayerAmount());
     builder.appendField("onlineMode", Server.getInstance().getPropertyBoolean("xbox-auth", false) ? 1 : 0);
     builder.appendField("bukkitVersion", Server.getInstance().getVersion());
     builder.appendField("bukkitName", Server.getInstance().getName());
@@ -115,10 +112,6 @@ public class Metrics {
   private void appendServiceData(JsonObjectBuilder builder) {
     builder.appendField("pluginVersion", plugin.getDescription().getVersion());
   }
-
-  /*private int getPlayerAmount() {
-	  return Server.getInstance().getOnlinePlayers().size();
-  } */
 
   public static class MetricsBase {
 

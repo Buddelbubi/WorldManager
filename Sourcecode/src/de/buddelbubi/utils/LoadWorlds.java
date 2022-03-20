@@ -1,8 +1,8 @@
 package de.buddelbubi.utils;
 
 import java.io.File;
-import java.io.IOException;
 
+import java.io.IOException;
 import cn.nukkit.Server;
 import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;

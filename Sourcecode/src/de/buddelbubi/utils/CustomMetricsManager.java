@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import cn.nukkit.Server;
 import de.buddelbubi.WorldManager;
 import de.buddelbubi.utils.Metrics.DrilldownPie;
@@ -14,7 +13,7 @@ import de.buddelbubi.utils.Metrics.SingleLineChart;
 public class CustomMetricsManager {
 	
 	
-	// WorldManager got a custom property to dont send its data in the bukkit tab of bStats.
+	// WorldManager got a custom property so it does not send its data in the bukkit tab of bStats.
 	// It has now the "other" tag. It does not have any have default charts. So I have to add them here.
 	
 	

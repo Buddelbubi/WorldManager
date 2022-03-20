@@ -1,12 +1,7 @@
 package de.buddelbubi;
 
 import java.io.File;
-
-
 import cn.nukkit.Server;
-
-
-
 import cn.nukkit.command.Command;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
@@ -29,14 +24,12 @@ public class WorldManager extends PluginBase {
 		
 		plugin = this;
 		
-		
 		Command command = new WorldManagerCommand("WorldManager");
 		command.setAliases(new String[] {"wm", "mw", "mv", "levelmanager", "lm"});
 		command.setDescription("The main WorldManager Command");
 		getServer().getCommandMap().register(command.getName(), command);
 		getServer().getPluginManager().registerEvents(new Events(), plugin);
 		getServer().getPluginManager().registerEvents(new WorldManagerUI(), plugin);
-		//getServer().getPluginManager().registerEvents(new Addons(), plugin);
 		getServer().getPluginManager().registerEvents(new Addons(), plugin);
 		LoadWorlds.loadWorlds();
 		AliasManager.registerAliases();
@@ -44,6 +37,7 @@ public class WorldManager extends PluginBase {
 		
 		CustomMetricsManager.loadMetrics();
 		
+		//Disabling the Auto-Updater is not recommended unless your host disables file downloads.
 		
 		File file = new File(Server.getInstance().getPluginPath(), "worldmanager.yml");
 		if(file.exists()) {

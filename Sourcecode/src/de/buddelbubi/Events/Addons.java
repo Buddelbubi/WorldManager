@@ -1,7 +1,6 @@
 package de.buddelbubi.Events;
 
 import java.io.BufferedReader;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
