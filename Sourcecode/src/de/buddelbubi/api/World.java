@@ -13,11 +13,12 @@ public class World {
 	private boolean useowngamemode;
 	private int gamemode;
 	private String respawnworld;
+	private String thumbnail;
 	private boolean fly;
 	private boolean protect;
 	private String note;
 	
-	
+	//Uncached World Object. It is recommended to use Cache.getWorld(Level level);
 	public World(Level level) {
 		
 		this.level = level.getName();
@@ -51,6 +52,10 @@ public class World {
 	
 	public String getRespawnWorld() {
 		return this.respawnworld;
+	}
+	
+	public String getThumbnail() {
+		return this.thumbnail;
 	}
 	
 	public boolean isFlyAllowed() {
@@ -157,6 +162,26 @@ public class World {
 		this.config.save();
 	}
 	
+	public void setRespawnWorld(World respawnworld) {
+		this.respawnworld = respawnworld.getAsLevel().getName();
+		this.config.set("respawnworld", respawnworld.getAsLevel().getName());
+		this.config.save();
+	}
+	
+	public void setThumbnail(String thumbnail) {
+		this.respawnworld = thumbnail;
+		this.config.set("thumbnail", thumbnail);
+		this.config.save();
+	}
+	
+	public void setPathThumbnail(String path) {
+		setThumbnail("path::" + path);
+	}
+	
+	public void setUrlThumbnail(String url) {
+		setThumbnail("url::" + url);
+	}
+	
 	public void setNote(String note) {
 		this.note = note;
 		this.config.set("note", note);
@@ -174,6 +199,7 @@ public class World {
 		this.protect = this.config.getBoolean("protected");
 		this.fly = this.config.getBoolean("fly");
 		this.respawnworld = this.config.getString("respawnworld");
+		this.thumbnail = this.config.getString("thumbnail");
 		this.note = this.config.getString("note");
 		
 	}

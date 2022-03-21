@@ -264,14 +264,17 @@ if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanage
 					String worldstring = "";
 					File folder = new File(Server.getInstance().getDataPath() + "worlds/");
 					File[] folders = folder.listFiles();
+					int worlds = 0;
+					int loaded = 0;
 					for(File f : folders) {
 						if(!f.isDirectory()) continue;
+						worlds++;
 						if(Server.getInstance().getLevelByName(f.getName()) != null) {
-							
+							loaded++;
 							worldstring = worldstring + "§8" + f.getName() + "§8 - §aLOADED §8(" + Server.getInstance().getLevelByName(f.getName()).getGenerator().getName() + ")\n";
 						} else worldstring = worldstring + "§8" + f.getName() + "§8 - §cUNLOADED\n";
 					}
-					arg0.sendMessage(prefix + "§7List of all worlds (" + folders.length +")\n" + worldstring);
+					arg0.sendMessage(prefix + "§7List of all worlds (" + worlds +") [§a" + loaded + "§7/§c" + (worlds-loaded) + "§7]\n" + worldstring);
 					
 					
 				} else arg0.sendMessage(prefix + "§cDo /worldmanager list");
@@ -321,17 +324,17 @@ if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanage
 					l = Server.getInstance().getLevelByName(args[1]);
 				}else {arg0.sendMessage(prefix + "§cThis world does not exist."); return false;}
 			}
-			Config c = new Config(new File(Server.getInstance().getDataPath() + "worlds/" + l.getFolderName(), "config.yml"));
+			World w = Cache.getWorld(l);
 			List<String> worlds = new ArrayList<>();
 			for(Level level : Server.getInstance().getLevels().values()) worlds.add(level.getName());
 			FormWindowCustom fw = new FormWindowCustom("§3WorldSettings - " + l.getFolderName());
-			fw.addElement(new ElementToggle("Load On Start", c.getBoolean("LoadOnStart")));
-			fw.addElement(new ElementToggle("Use Own Gamemode", c.getBoolean("UseOwnGamemode")));
-			fw.addElement(new ElementDropdown("Gamemode", Arrays.asList("Survival", "Creative", "Adventure", "Spectator"), c.getInt("Gamemode")));
-			fw.addElement(new ElementToggle("Fly", c.getBoolean("fly")));
-		    fw.addElement(new ElementDropdown("Respawn World", worlds, (worlds.contains(c.getString("respawnworld")) ? worlds.indexOf(c.getString("respawnworld")) : worlds.indexOf(l.getName()))));
-			fw.addElement(new ElementToggle("Protected", c.getBoolean("protected")));
-			fw.addElement(new ElementInput("Notepad", "Sth. to remember like coords.", c.getString("note")));
+			fw.addElement(new ElementToggle("Load On Start", w.doesLoadOnStart()));
+			fw.addElement(new ElementToggle("Use Own Gamemode", w.isUsingOwnGamemode()));
+			fw.addElement(new ElementDropdown("Gamemode", Arrays.asList("Survival", "Creative", "Adventure", "Spectator"), w.getOwnGamemode()));
+			fw.addElement(new ElementToggle("Fly", w.isFlyAllowed()));
+		    fw.addElement(new ElementDropdown("Respawn World", worlds, (worlds.contains(w.getRespawnWorld()) ? worlds.indexOf(w.getRespawnWorld()) : worlds.indexOf(l.getName()))));
+			fw.addElement(new ElementToggle("Protected", w.isProtected()));
+			fw.addElement(new ElementInput("Notepad", "Sth. to remember like coords.", w.getNote()));
 			
 			((Player) arg0).showFormWindow(fw);
 		} else arg0.sendMessage(prefix + "§cDo /worldmanager settings [World]");
@@ -782,7 +785,7 @@ if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanage
 		
 	}
 } else if(args[0].equalsIgnoreCase("spawn")) {
-if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanager.spawn")) {
+	if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanager.spawn")) {
 		
 		arg0.sendMessage(prefix + "§cYou are lacking the permission §e'worldmanager." + args[0] + "'"); return false;		
 		
@@ -794,6 +797,25 @@ if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanage
 			arg0.sendMessage(prefix + "§7Successfully teleported to spawn.");
 			
 		} else arg0.sendMessage(prefix + "§cThis command can only be executed ingame.");
+		
+	}
+	
+} else if(args[0].equalsIgnoreCase("status")) {
+	
+	if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanager.status")) {
+		
+		arg0.sendMessage(prefix + "§cYou are lacking the permission §e'worldmanager." + args[0] + "'"); return false;		
+		
+	} else {
+		
+		String message = "§l§3WorldManager §eStatus\n§r";
+		message += ("§ePlugin Version: §7" + WorldManager.plugin.getDescription().getVersion() + "\n");
+		message += ("§eCached Worlds: §7" + Cache.getWorldCache().size() + "\n");
+		message += ("§eCached Players: §7" + Cache.getCachedPlayerGamemodes() + "\n");
+		message += "§eWorlds: §7";
+		for(World w : Cache.getWorldCache()) message += w.getAsLevel().getName() + ", ";
+		arg0.sendMessage(message);
+		
 		
 	}
 	

@@ -18,6 +18,8 @@ import cn.nukkit.form.window.FormWindowSimple;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.generator.Generator;
 import de.buddelbubi.Commands.WorldManagerCommand;
+import de.buddelbubi.api.World;
+import de.buddelbubi.utils.Cache;
 
 public class WorldManagerUI implements Listener{
 
@@ -25,8 +27,13 @@ public class WorldManagerUI implements Listener{
 		
 		FormWindowSimple fw = new FormWindowSimple("§3WorldManager §8- §cTeleportation UI", "§8Teleport to another level using an UI");
 		for(Level l : Server.getInstance().getLevels().values()) {
-		if(p.hasPermission("worldmanager.teleport") || p.hasPermission("worldmanager.teleport." + l.getName()) || p.hasPermission("worldmanager.admin"))
-			fw.addButton(new ElementButton(l.getFolderName(), new ElementButtonImageData("path", (l.getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (l.getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png")));
+		if(p.hasPermission("worldmanager.teleport") || p.hasPermission("worldmanager.teleport." + l.getName()) || p.hasPermission("worldmanager.admin")) {
+			World w = Cache.getWorld(l);
+			String thumbnail = "path::textures/ui/ErrorGlyph_small_hover.png";
+			if(w.getThumbnail().startsWith("path::") || w.getThumbnail().startsWith("url::")) thumbnail = w.getThumbnail();
+			fw.addButton(new ElementButton(l.getFolderName(), new ElementButtonImageData(thumbnail.split("::")[0], thumbnail.split("::")[1])));
+			//fw.addButton(new ElementButton(l.getFolderName(), new ElementButtonImageData("path", (l.getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (l.getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png")));
+		}
 		}
 		p.showFormWindow(fw);
 	}

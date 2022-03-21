@@ -53,6 +53,11 @@ public class LoadWorlds {
 				Level level = Server.getInstance().getLevelByName(f.getName());
 				if(level == null) Server.getInstance().loadLevel(f.getName());
 				
+				if(!c.exists("thumbnail") ) {
+					c.set("thumbnail", "path::" + ((level.getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (level.getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png"));
+					c.save();
+				}
+				
 			} else return;
 			
 			try {
@@ -61,15 +66,9 @@ public class LoadWorlds {
 				WorldManager.plugin.getLogger().critical("Could not initialize " + worldname + ". Please message the developer.");
 				e.printStackTrace();
 			}
-				
-		
-			if(c.exists("version")) {
-				if(c.getBoolean("LoadOnStart")) Server.getInstance().loadLevel(worldname);
-			}
-		
-			loaded = true;
+
 		}
-		
+		loaded = true;
 	}
 	
 }

@@ -14,7 +14,6 @@ import cn.nukkit.event.block.BlockBreakEvent;
 import cn.nukkit.event.block.BlockPlaceEvent;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.level.LevelLoadEvent;
-import cn.nukkit.event.level.LevelUnloadEvent;
 import cn.nukkit.event.player.PlayerDeathEvent;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.event.player.PlayerGameModeChangeEvent;
@@ -59,6 +58,7 @@ public class Events implements Listener {
 		if(!c.exists("Gamemode"))	c.set("Gamemode", Server.getInstance().getDefaultGamemode());
 		if(!c.exists("fly")) c.set("fly", false);
 		if(!c.exists("respawnworld")) c.set("respawnworld", e.getLevel().getName());
+		if(!c.exists("thumbnail")) 	c.set("thumbnail", "path::" + ((e.getLevel().getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (e.getLevel().getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png"));
 		if(!c.exists("protected"))	c.set("protected", false);
 		if(!c.exists("note"))	c.set("note", "");
 		
@@ -109,7 +109,13 @@ public class Events implements Listener {
 			
 			if(respawnworld.containsKey(e.getPlayer().getName())) {
 				Level l = Server.getInstance().getLevelByName(respawnworld.get(e.getPlayer().getName()));
-				if(l != null) e.setRespawnPosition(l.getSpawnLocation()); 
+				
+				
+				if(l != null) {
+					if(e.getPlayer().getSpawn().getLevel() == l) {
+						e.setRespawnPosition(e.getPlayer().getSpawn());
+					} else e.setRespawnPosition(l.getSpawnLocation()); 
+				}
 				respawnworld.remove(e.getPlayer().getName());
 			}
 			
@@ -267,10 +273,5 @@ public class Events implements Listener {
 	@EventHandler
 	public void on(PlayerQuitEvent e) {
 		if(WorldManagerCommand.threads.containsKey(e.getPlayer().getName())) WorldManagerCommand.threads.remove(e.getPlayer().getName());
-	}
-	
-	@EventHandler
-	public void on(LevelUnloadEvent e) {
-		if(Cache.worlds.containsKey(e.getLevel().getName())) Cache.worlds.remove(e.getLevel().getName());
 	}
 }

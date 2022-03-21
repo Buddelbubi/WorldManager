@@ -11,6 +11,7 @@ import de.buddelbubi.Commands.WorldManagerCommand;
 import de.buddelbubi.Events.Addons;
 import de.buddelbubi.Events.Events;
 import de.buddelbubi.Events.WorldManagerUI;
+import de.buddelbubi.utils.Cache;
 import de.buddelbubi.utils.CustomMetricsManager;
 import de.buddelbubi.utils.LoadWorlds;
 import de.buddelbubi.utils.Updater;
@@ -31,6 +32,7 @@ public class WorldManager extends PluginBase {
 		getServer().getPluginManager().registerEvents(new Events(), plugin);
 		getServer().getPluginManager().registerEvents(new WorldManagerUI(), plugin);
 		getServer().getPluginManager().registerEvents(new Addons(), plugin);
+		getServer().getPluginManager().registerEvents(new Cache(), plugin);
 		LoadWorlds.loadWorlds();
 		AliasManager.registerAliases();
 		Addons.initJson();
