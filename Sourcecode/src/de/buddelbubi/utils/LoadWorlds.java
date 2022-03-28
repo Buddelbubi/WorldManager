@@ -16,11 +16,11 @@ public class LoadWorlds {
 		File folder = new File(Server.getInstance().getDataPath() + "worlds/");
 		File[] folders = folder.listFiles();
 		for(File f : folders) {
-			if(!f.isDirectory()) return;
+			if(!f.isDirectory()) continue;
 			
 			if(!new File(Server.getInstance().getDataPath() + "worlds/" + f.getName(), "level.dat").exists()) {
 				WorldManager.plugin.getLogger().alert("Unknown folder: " + f.getName() + ", Missing level.dat.");
-				return;
+				continue;
 			}
 			
 			File configfile = new File(Server.getInstance().getDataPath() + "worlds/" + f.getName(), "config.yml");
@@ -36,6 +36,7 @@ public class LoadWorlds {
 			Config c = new Config(configfile);
 			
 			String worldname = f.getName().split("/")[f.getName().split("/").length-1];
+			
 			
 			if(!c.exists("version")) 	c.set("version", 0);
 			if(!c.exists("LoadOnStart")) 	c.set("LoadOnStart", true);
@@ -58,7 +59,7 @@ public class LoadWorlds {
 					c.save();
 				}
 				
-			} else return;
+			} else continue;
 			
 			try {
 				Cache.initWorld(worldname);
