@@ -30,7 +30,7 @@
       "author": "wode490390",
       "description": "&7MineshaftPopulator is a plugin by the chinese developer Woder.\nThis plugin adds the Mineshaft to your server.\nMore information at Woder's github page."
     },
-    "EmptyWorld": {
+    "EmptyWorldGenerator": {
       "link": "https://cloudburstmc.org/resources/emptyworld.220/download",
       "author": "CreeperFace",
       "description": "&7EmptyWorld is a plugin by the plugin developer CreeperFace.\nThis plugin let you generate Empty Worlds.\nMore information at cloudburstmc.org."
