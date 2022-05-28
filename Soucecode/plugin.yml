@@ -1,0 +1,8 @@
+name: WorldManager
+version: 1.1.8
+api: [1.0.11, 1.0.13]
+author: Buddelbubi
+description: WorldManager is the most powerful world management system.
+main: de.buddelbubi.WorldManager
+website: https://cloudburstmc.org/resources/worldmanager-advanced-multiworld-plugin.560/
+prefix: WorldManager
