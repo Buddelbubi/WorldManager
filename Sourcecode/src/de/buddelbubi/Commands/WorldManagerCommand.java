@@ -1,6 +1,7 @@
 package de.buddelbubi.Commands;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,6 +33,7 @@ import de.buddelbubi.Events.Addons;
 import de.buddelbubi.Events.Events;
 import de.buddelbubi.Events.WorldManagerUI;
 import de.buddelbubi.api.World;
+import de.buddelbubi.api.WorldManagerOption;
 import de.buddelbubi.utils.Cache;
 
 
@@ -335,6 +337,14 @@ if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanage
 		    fw.addElement(new ElementDropdown("Respawn World", worlds, (worlds.contains(w.getRespawnWorld()) ? worlds.indexOf(w.getRespawnWorld()) : worlds.indexOf(l.getName()))));
 			fw.addElement(new ElementToggle("Protected", w.isProtected()));
 			fw.addElement(new ElementInput("Notepad", "Sth. to remember like coords.", w.getNote()));
+			Config c = w.getConfig();
+			for(WorldManagerOption o : WorldManagerOption.getCustomOptions()) {
+				if(o.getValue() instanceof Boolean) {
+					fw.addElement(new ElementToggle(o.getDisplay(), c.getBoolean(o.getKey())));
+				} else if(o.getValue() instanceof String) {
+					fw.addElement(new ElementInput(o.getDisplay(), o.getDescription(), c.getString(o.getKey())));
+				}
+			}
 			
 			((Player) arg0).showFormWindow(fw);
 		} else arg0.sendMessage(prefix + "§cDo /worldmanager settings [World]");

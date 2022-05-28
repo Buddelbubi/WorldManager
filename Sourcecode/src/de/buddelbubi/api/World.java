@@ -18,6 +18,8 @@ public class World {
 	private boolean protect;
 	private String note;
 	
+	
+	
 	//Uncached World Object. It is recommended to use Cache.getWorld(Level level);
 	public World(Level level) {
 		

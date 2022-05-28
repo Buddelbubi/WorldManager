@@ -2,11 +2,13 @@ package de.buddelbubi.utils;
 
 import java.io.File;
 
+
 import java.io.IOException;
 import cn.nukkit.Server;
 import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
 import de.buddelbubi.WorldManager;
+import de.buddelbubi.api.WorldManagerOption;
 
 public class LoadWorlds {
 
@@ -46,6 +48,12 @@ public class LoadWorlds {
 			if(!c.exists("respawnworld")) 	c.set("respawnworld", worldname);
 			if(!c.exists("protected"))		c.set("protected", false);
 			if(!c.exists("note")) 	c.set("note", "");
+			for(WorldManagerOption option : WorldManagerOption.getCustomOptions()) {
+				if(!c.exists(option.getKey())) {
+					c.set(option.getKey(), option.getValue());
+					System.out.println("Overwrite");
+				}
+			}
 			
 			c.save();
 			

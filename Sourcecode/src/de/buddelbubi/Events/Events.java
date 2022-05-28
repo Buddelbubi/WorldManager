@@ -30,6 +30,7 @@ import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
 import de.buddelbubi.Commands.WorldManagerCommand;
 import de.buddelbubi.api.World;
+import de.buddelbubi.api.WorldManagerOption;
 import de.buddelbubi.utils.Cache;
 
 
@@ -61,6 +62,11 @@ public class Events implements Listener {
 		if(!c.exists("thumbnail")) 	c.set("thumbnail", "path::" + ((e.getLevel().getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (e.getLevel().getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png"));
 		if(!c.exists("protected"))	c.set("protected", false);
 		if(!c.exists("note"))	c.set("note", "");
+		for(WorldManagerOption option : WorldManagerOption.getCustomOptions()) {
+			if(!c.exists(option.getKey())) {
+				c.set(option.getKey(), option.getValue());
+			}
+		}
 		
 		c.save();
 		
@@ -148,6 +154,11 @@ public class Events implements Listener {
 				c.set("respawnworld",  fw.getResponse().getResponse(4));
 				c.set("protected",  fw.getResponse().getResponse(5));
 				c.set("note",  fw.getResponse().getResponse(6));
+				int index = 7;
+				for(WorldManagerOption o : WorldManagerOption.getCustomOptions()) {
+					c.set(o.getKey(), fw.getResponse().getResponse(index));
+					index++;
+				}
 				c.save();
 	
 				

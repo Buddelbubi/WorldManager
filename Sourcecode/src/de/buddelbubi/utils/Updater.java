@@ -29,6 +29,7 @@ public class Updater {
 				return true; 	
 			}  else return false;
 		} catch (Exception e) {
+			WorldManager.plugin.getLogger().error("§cCould not check if a WorldManager Update is available!");
 			return false;
 		}
 		

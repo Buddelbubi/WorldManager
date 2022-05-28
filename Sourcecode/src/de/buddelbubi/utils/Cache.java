@@ -24,6 +24,14 @@ public class Cache implements Listener {
 		} else return null;
 	}
 	
+	public static boolean isCached(String name) {
+		return worlds.containsKey(name);
+	}
+	
+	public static boolean isCached(Level level) {
+		return isCached(level.getName());
+	}
+	
 	public static Collection<World> getWorldCache() {
 		return worlds.values();
 	}

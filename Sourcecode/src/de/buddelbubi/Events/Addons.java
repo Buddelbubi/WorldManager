@@ -20,21 +20,38 @@ import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementButtonImageData;
 import cn.nukkit.form.window.FormWindowSimple;
+import de.buddelbubi.WorldManager;
 import de.buddelbubi.Commands.WorldManagerCommand;
 
 public class Addons implements Listener {
-
+	
   public final static String url = "https://raw.githubusercontent.com/Buddelbubi/WorldManager/main/addons";
 
+  public final static String backupurl = "https://buddelbubi.xyz/minecraft/worldmanager/addons";
+  
   public static JsonObject json;
 
   @SuppressWarnings("deprecation")
   public static void initJson() {
-    json = new JsonParser().parse(getText(url)).getAsJsonObject();
+    try {
+    	json = new JsonParser().parse(getText(url)).getAsJsonObject();
+	} catch (Exception e) {
+		try {
+			json = new JsonParser().parse(getText(backupurl)).getAsJsonObject();
+		} catch (Exception e2) {
+			WorldManager.plugin.getLogger().error("Could not load the addon page.");
+		}
+		
+	}
   }
 
   public static void showAddonUI(Player p) {
 
+	if(json == null) {
+		p.sendMessage(WorldManagerCommand.prefix + "Addons are not available right now. It may be caused by gson.");
+		return;
+	}
+	  
     FormWindowSimple fw = new FormWindowSimple("񗉲�3WorldManager Addon Marketplace", "�7Here you can download Addons and extentions for WorldManager and other World-Related plugins.");
     for (String s: json.keySet()) {
       if (!s.equals("plugins")) {
@@ -88,7 +105,7 @@ public class Addons implements Listener {
 
       return response.toString();
     } catch (Exception e) {
-      Server.getInstance().getLogger().warning(WorldManagerCommand.prefix + "Could't fetch addon page.");
+      Server.getInstance().getLogger().warning(WorldManagerCommand.prefix + "Could't fetch addon page. (" + e.getMessage() +")");
       return null;
     }
   }
