@@ -88,7 +88,12 @@
     "WorldChat": {
       "link": "https://github.com/Buddelbubi/WorldManager/raw/main/wmWorldChat.jar",
       "author": "Buddelbubi",
-      "description": "&7WorldChat is a plugin by the german developer Buddelbubi.\nThis plugin is a simple plugin for keeping the chat in a world.\n§cNot compatible with other Chat Plugins!"
+      "description": "&7WorldChat is a plugin by the german developer Buddelbubi.\nThis plugin is a simple plugin for keeping the chat in a world.\n§aCompatible with other Chat Plugins!"
+    },
+    "WorldJoinMessage": {
+      "link": "https://github.com/Buddelbubi/WorldManager/raw/main/wmWorldJoinMessage.jar",
+      "author": "Buddelbubi",
+      "description": "&7WorldJoinMessage is a plugin by the german developer Buddelbubi.\nWorldJoinMessage can be used to set join and leave messages if someone enters or leaves a world."
     },
     "MultiNether": {
       "link": "https://cloudburstmc.org/resources/multinether.662/download",
@@ -101,6 +106,7 @@
     "WorldPlayerLimits": "textures/ui/Ping_Green_Dark.png",
     "WorldWhitelist": "textures/ui/creative_icon.png",
     "WorldChat": "textures/ui/chat_send.png",
+    "WorldJoinMessage": "textures/ui/move.png",
     "settings": {
         "name": "Buddelbubis Selfmade Addons",
         "thumbnail": "textures/ui/xbox_face_button_right.png"
