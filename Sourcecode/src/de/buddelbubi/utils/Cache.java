@@ -56,7 +56,7 @@ public class Cache implements Listener {
 			
 			@Override
 			public void run() {
-				WorldManager.plugin.getLogger().info("§eIf you see any errors, please keep in mind that they are not related to WorldManager.");	
+				WorldManager.get().getLogger().info("§eIf you see any errors, please keep in mind that they are not related to WorldManager.");	
 			}
 		}, 2);
 	}

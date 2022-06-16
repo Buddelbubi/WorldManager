@@ -21,7 +21,7 @@ public class LoadWorlds {
 			if(!f.isDirectory()) continue;
 			
 			if(!new File(Server.getInstance().getDataPath() + "worlds/" + f.getName(), "level.dat").exists()) {
-				WorldManager.plugin.getLogger().alert("Unknown folder: " + f.getName() + ", Missing level.dat.");
+				WorldManager.get().getLogger().alert("Unknown folder: " + f.getName() + ", Missing level.dat.");
 				continue;
 			}
 			
@@ -51,7 +51,6 @@ public class LoadWorlds {
 			for(WorldManagerOption option : WorldManagerOption.getCustomOptions()) {
 				if(!c.exists(option.getKey())) {
 					c.set(option.getKey(), option.getValue());
-					System.out.println("Overwrite");
 				}
 			}
 			
@@ -72,7 +71,7 @@ public class LoadWorlds {
 			try {
 				Cache.initWorld(worldname);
 			} catch (Exception e) {
-				WorldManager.plugin.getLogger().critical("Could not initialize " + worldname + ". Please message the developer.");
+				WorldManager.get().getLogger().critical("Could not initialize " + worldname + ". Please message the developer.");
 				e.printStackTrace();
 			}
 

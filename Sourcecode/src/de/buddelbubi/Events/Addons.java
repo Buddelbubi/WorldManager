@@ -39,7 +39,7 @@ public class Addons implements Listener {
 		try {
 			json = new JsonParser().parse(getText(backupurl)).getAsJsonObject();
 		} catch (Exception e2) {
-			WorldManager.plugin.getLogger().error("Could not load the addon page.");
+			WorldManager.get().getLogger().error("Could not load the addon page.");
 		}
 		
 	}

@@ -22,7 +22,7 @@ public class CustomMetricsManager {
 		
 		Server.getInstance().getLogger().info("bStats Metrics loading...");
 		
-		Metrics metrics = new Metrics(WorldManager.plugin, 11320);
+		Metrics metrics = new Metrics(WorldManager.get(), 11320);
 		
 		SingleLineChart servers = new SingleLineChart("servers", new Callable<Integer>() {
 
@@ -45,7 +45,7 @@ public class CustomMetricsManager {
 			@Override
 			public String call() throws Exception {
 				
-				return WorldManager.plugin.getDescription().getVersion();
+				return WorldManager.get().getDescription().getVersion();
 			}
 		});
 		

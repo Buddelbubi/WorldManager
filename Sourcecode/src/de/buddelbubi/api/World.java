@@ -6,7 +6,6 @@ import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
 
 public class World {
-
 	private String level;
 	private Config config;
 	private boolean loadonstart;
@@ -22,7 +21,7 @@ public class World {
 	
 	//Uncached World Object. It is recommended to use Cache.getWorld(Level level);
 	public World(Level level) {
-		
+
 		this.level = level.getName();
 		refreshData();
 		

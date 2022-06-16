@@ -20,7 +20,7 @@ import de.buddelbubi.utils.Updater;
 
 public class WorldManager extends PluginBase {
 
-	public static Plugin plugin;
+	protected static Plugin plugin;
 	
 	public void onEnable() {
 		
@@ -51,6 +51,10 @@ public class WorldManager extends PluginBase {
 		
 		Server.getInstance().getLogger().info("§bWorldManager v" + plugin.getDescription().getVersion() + " loaded successfully");
 		
+	}
+	
+	public static Plugin get() {
+		return plugin;
 	}
 	
 }

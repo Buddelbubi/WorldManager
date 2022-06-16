@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.nukkit.utils.Config;
+import de.buddelbubi.WorldManager;
 import de.buddelbubi.utils.Cache;
 
 public class WorldManagerOption {
@@ -23,12 +24,14 @@ private static List<WorldManagerOption> custom = new ArrayList<>();
 			c.save();
 			}
 		}
+		WorldManager.get().getLogger().info(option.display + " injected into WorldManager.");
 	}
 	
 	String key;
 	String display;
 	String description;
 	Object value;
+	public int maxvalue;
 	
 	public WorldManagerOption(String key, String display, String description, Object value) {
 		super();
@@ -36,6 +39,16 @@ private static List<WorldManagerOption> custom = new ArrayList<>();
 		this.display = display;
 		this.description = description;
 		this.value = value;
+		this.maxvalue = 0;
+	}
+	
+	public WorldManagerOption(String key, String display, String description, Object value, int maxvalue) {
+		super();
+		this.key = key;
+		this.display = display;
+		this.description = description;
+		this.value = value;
+		this.maxvalue = maxvalue;
 	}
 
 	public String getKey() {

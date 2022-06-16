@@ -17,6 +17,7 @@ import cn.nukkit.command.ConsoleCommandSender;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.form.element.ElementDropdown;
 import cn.nukkit.form.element.ElementInput;
+import cn.nukkit.form.element.ElementSlider;
 import cn.nukkit.form.element.ElementToggle;
 import cn.nukkit.form.window.FormWindowCustom;
 import cn.nukkit.level.GameRule;
@@ -89,6 +90,10 @@ public class WorldManagerCommand extends Command {
 				if((arg0.hasPermission("worldmanager.teleportui") || arg0.hasPermission("worldmanager.admin")) && args.length == 1 && !(arg0 instanceof ConsoleCommandSender)) {
 					WorldManagerUI.openWorldTeleportUI((Player) arg0);
 					return false;
+				} else {
+					
+					arg0.sendMessage(prefix + "§cYou are lacking the permission §e'worldmanager.teleportui'");
+					
 				}
 				
 				if(arg0 instanceof ConsoleCommandSender && args.length != 3) {
@@ -307,7 +312,7 @@ if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanage
 		}
 	
 	
-} else if(args[0].equalsIgnoreCase("settings")) {
+} else if(args[0].equalsIgnoreCase("settings") || args[0].equalsIgnoreCase("edit")) {
 	if(arg0 instanceof ConsoleCommandSender) {
 		arg0.sendMessage(prefix + "§cThis can only be done ingame.");
 		return false;
@@ -343,6 +348,8 @@ if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanage
 					fw.addElement(new ElementToggle(o.getDisplay(), c.getBoolean(o.getKey())));
 				} else if(o.getValue() instanceof String) {
 					fw.addElement(new ElementInput(o.getDisplay(), o.getDescription(), c.getString(o.getKey())));
+				} else if(o.getValue() instanceof Integer) {
+					fw.addElement(new ElementSlider(o.getDisplay(), 0, o.maxvalue, 1, c.getInt(o.getKey())));
 				}
 			}
 			
@@ -659,7 +666,7 @@ else if(args[0].equalsIgnoreCase("save")) {
 		
 else if(args[0].equalsIgnoreCase("version")) {
 	
-	arg0.sendMessage(prefix + "You are using WorldManager v" + WorldManager.plugin.getDescription().getVersion()); 
+	arg0.sendMessage(prefix + "You are using WorldManager v" + WorldManager.get().getDescription().getVersion()); 
 	
 } else if (args[0].equalsIgnoreCase("sync")) {
 	
@@ -819,7 +826,7 @@ if(!arg0.hasPermission("worldmanager.admin") && !arg0.hasPermission("worldmanage
 	} else {
 		
 		String message = "§l§3WorldManager §eStatus\n§r";
-		message += ("§ePlugin Version: §7" + WorldManager.plugin.getDescription().getVersion() + "\n");
+		message += ("§ePlugin Version: §7" + WorldManager.get().getDescription().getVersion() + "\n");
 		message += ("§eCached Worlds: §7" + Cache.getWorldCache().size() + "\n");
 		message += ("§eCached Players: §7" + Cache.getCachedPlayerGamemodes() + "\n");
 		message += "§eWorlds: §7";
