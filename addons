@@ -90,6 +90,11 @@
       "author": "Buddelbubi",
       "description": "&7WorldChat is a plugin by the german developer Buddelbubi.\nThis plugin is a simple plugin for keeping the chat in a world.\n§aCompatible with other Chat Plugins!"
     },
+    "Biome": {
+      "link": "https://github.com/Buddelbubi/WorldManager/raw/main/wmBiome.jar",
+      "author": "Buddelbubi",
+      "description": "&7Biome is a plugin by the german developer Buddelbubi.\nEdit biomes in certain areas."
+    },
     "WorldJoinMessage": {
       "link": "https://github.com/Buddelbubi/WorldManager/raw/main/wmWorldJoinMessage.jar",
       "author": "Buddelbubi",
@@ -107,6 +112,7 @@
     "WorldWhitelist": "textures/ui/creative_icon.png",
     "WorldChat": "textures/ui/chat_send.png",
     "WorldJoinMessage": "textures/ui/move.png",
+    "Biome": "textures/ui/glyph_world_template.png",
     "settings": {
         "name": "Buddelbubis Selfmade Addons",
         "thumbnail": "textures/ui/xbox_face_button_right.png"
@@ -129,6 +135,7 @@
     }
   },
   "editing": {
+    "Biome": "textures/ui/glyph_world_template.png",
     "SimpleWorldEdit": "textures/items/gold_axe.png",
     "FastAsyncWorldEdit": "textures/items/wood_axe.png",
     "DBLib": "textures/ui/servers.png",
