@@ -52,7 +52,7 @@ public class Addons implements Listener {
 		return;
 	}
 	  
-    FormWindowSimple fw = new FormWindowSimple("§1§2§3WorldManager §cAddon Marketplace", "§7Here you can download Addons and extentions for WorldManager and other World-Related plugins.");
+    FormWindowSimple fw = new FormWindowSimple("§3WorldManager §cAddon Marketplace", "§7Here you can download Addons and extentions for WorldManager and other World-Related plugins.");
     for (String s: json.keySet()) {
       if (!s.equals("plugins")) {
         JsonObject section = json.get(s).getAsJsonObject();
@@ -60,7 +60,7 @@ public class Addons implements Listener {
         fw.addButton(new ElementButton(settings.get("name").getAsString(), new ElementButtonImageData("path", settings.get("thumbnail").getAsString())));
       }
     }
-    p.showFormWindow(fw);
+    p.showFormWindow(fw, "addonsections".hashCode());
   }
 
   @EventHandler
@@ -70,24 +70,24 @@ public class Addons implements Listener {
 			
 			FormWindowSimple fws = (FormWindowSimple) e.getWindow();
 			FormWindowSimple fw = new FormWindowSimple("", "");
-			if(fws.getTitle().startsWith("§1§2§3")) {
+			if(e.getFormID() == "addonsections".hashCode()) {
 				JsonObject section = json.get(fws.getResponse().getClickedButton().getText().toLowerCase().replace(" ", "_")).getAsJsonObject();
 				JsonObject settings = section.get("settings").getAsJsonObject();
-				fw.setTitle("§1§3§3" + settings.get("name").getAsString());
+				fw.setTitle("§3" + settings.get("name").getAsString());
 				for(String plugin : section.keySet()) if(!plugin.equals("settings")) fw.addButton(new ElementButton(plugin, new ElementButtonImageData("path", section.get(plugin).getAsString())));
-				e.getPlayer().showFormWindow(fw);
-			} else if(fws.getTitle().startsWith("§1§3§3")) {
+				e.getPlayer().showFormWindow(fw, "addonsection".hashCode());
+			} else if(e.getFormID() == "addonsection".hashCode()) {
 				JsonObject plugins = json.get("plugins").getAsJsonObject();
 				JsonObject plugin = plugins.get(fws.getResponse().getClickedButton().getText()).getAsJsonObject();
 				fw.addButton(new ElementButton("Install", new ElementButtonImageData("path", "textures/ui/free_download.png")));
-				fw.setTitle("§2§4§3" + fws.getResponse().getClickedButton().getText() + " by " + plugin.get("author").getAsString());
+				fw.setTitle("§3" + fws.getResponse().getClickedButton().getText() + " by " + plugin.get("author").getAsString());
 				fw.setContent(plugin.get("description").getAsString().replace("&", "§"));
-				e.getPlayer().showFormWindow(fw);
-			} else if(fws.getTitle().startsWith("§2§4§3")) installAddon(fws.getTitle().replace("§2§4§3", "").split(" ")[0], e.getPlayer());
+				e.getPlayer().showFormWindow(fw, "installaddon".hashCode());
+			} else if(e.getFormID() == "installaddon".hashCode()) installAddon(fws.getTitle().replace("§3", "").split(" ")[0], e.getPlayer());
 	}
   }
   
-  public static String getText(String url) {
+  private static String getText(String url) {
     try {
       URL website = new URL(url);
       URLConnection connection = website.openConnection();
@@ -101,7 +101,7 @@ public class Addons implements Listener {
       while ((inputLine = in .readLine()) != null)
         response.append(inputLine);
 
-      in .close();
+      in.close();
 
       return response.toString();
     } catch (Exception e) {
@@ -120,7 +120,7 @@ public class Addons implements Listener {
 			File file = new File(Server.getInstance().getPluginPath(), name + ".jar");
 			InputStream in = url.openStream();
 			Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			arg0.sendMessage(WorldManagerCommand.prefix + "§aDownload successfull.");
+			arg0.sendMessage(WorldManagerCommand.prefix + "§aDownload successful.");
 			
 			Server.getInstance().enablePlugin(Server.getInstance().getPluginManager().loadPlugin(file));
 			

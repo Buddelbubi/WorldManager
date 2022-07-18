@@ -1,6 +1,6 @@
 name: WorldManager
-version: 1.1.9
-api: [1.0.11, 1.0.13]
+version: 1.1.11
+api: [1.0.11, 1.0.13, 1.0.14]
 author: Buddelbubi
 description: WorldManager is the most powerful world management system.
 main: de.buddelbubi.WorldManager

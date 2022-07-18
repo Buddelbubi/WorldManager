@@ -3,6 +3,8 @@ package de.buddelbubi.Commands;
 import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.command.data.CommandParamType;
+import cn.nukkit.command.data.CommandParameter;
 
 public class AliasManager extends Command {
 
@@ -22,8 +24,8 @@ public class AliasManager extends Command {
 			Server.getInstance().dispatchCommand(arg0, "wm load" + args); 
 		} else if(arg1.equalsIgnoreCase("mvedit")){
 			Server.getInstance().dispatchCommand(arg0, "wm gamerule" + args); 
-		} else if(arg1.equalsIgnoreCase("locatebiome")) {
-			Server.getInstance().dispatchCommand(arg0, "wm locatebiome" + args); 
+		} else if(arg1.equalsIgnoreCase("worlds")) {
+			Server.getInstance().dispatchCommand(arg0, "wm list"); 
 		}
 		return false;
 	}
@@ -31,9 +33,16 @@ public class AliasManager extends Command {
 	public static void registerAliases() {
 		
 		Command world = new AliasManager("world");
+		world.setDescription("Teleport to a different world.");
+		world.addCommandParameters("world", new CommandParameter[] {CommandParameter.newType("world", true, CommandParamType.STRING)});
+		Command worlds = new AliasManager("worlds");
+		worlds.setDescription("Shows you a list of all worlds.");
 		Command load = new AliasManager("mvimport");
+		load.setDescription("Lets you load a unloaded world.");
+		load.addCommandParameters("world", new CommandParameter[] {CommandParameter.newType("world", false, CommandParamType.STRING)});
 		Command edit = new AliasManager("mvedit");
-		Command locatebiome = new AliasManager("locatebiome");
+		edit.setDescription("Opens the WorldManager Settings Menu");
+		edit.addCommandParameters("world", new CommandParameter[] {CommandParameter.newType("world", true, CommandParamType.STRING)});
 		
 		load.setAliases(new String[] {
 				"mvload", "uniload", "mvimport"
@@ -42,10 +51,10 @@ public class AliasManager extends Command {
 				"mvtp", "unitp", "wmtp", "mwtp", "lmtp"
 		});
 		
-		Server.getInstance().getCommandMap().register(world.getName(), world);
-		Server.getInstance().getCommandMap().register(load.getName(), load);
-		Server.getInstance().getCommandMap().register(edit.getName(), edit);
-		Server.getInstance().getCommandMap().register(locatebiome.getName(), locatebiome);
+		for(Command c : new Command[] {world, worlds, load, edit}) {
+			Server.getInstance().getCommandMap().register(c.getName(), c);
+		}
+		
 	}
 	
 }

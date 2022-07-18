@@ -23,13 +23,12 @@ public class Updater {
 	public static boolean updateAvailable() {
 		
 		try {
-			URL githuburl = new URL("https://raw.githubusercontent.com/Buddelbubi/WorldManager/main/version");
-			if(!(new Scanner(githuburl.openStream()).next().contains(WorldManager.get().getDescription().getVersion()))) {
-				WorldManager.get().getLogger().info("§eA new version of WorldManager is available. Try to Auto-Update!");
+			String ver = getNewestVersion();
+			if(!(ver.contains(WorldManager.get().getDescription().getVersion()))) {
+				WorldManager.get().getLogger().info("§eA new version of WorldManager is available. (" + ver+ ") Try to Auto-Update!");
 				return true; 	
 			}  else return false;
 		} catch (Exception e) {
-			WorldManager.get().getLogger().error("§cCould not check if a WorldManager Update is available!");
 			return false;
 		}
 		
@@ -44,11 +43,33 @@ public class Updater {
 			InputStream in = url.openStream();
 			Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			WorldManager.get().getLogger().info("§aUpdated WorldManager successfully. Please reload or reboot your Server.");
+			in.close();
 			
 		} catch (IOException e) {
 			WorldManager.get().getLogger().error("§cUpdate failed... Please update manually. (" + e.getMessage() + ")");
 		
 		}
+	}
+	
+	public static String getNewestVersion() {
+		
+		String result = WorldManager.get().getDescription().getVersion(); //in case something goes wrong.
+		
+		try {
+			URL githuburl = new URL("https://raw.githubusercontent.com/Buddelbubi/WorldManager/main/version");
+			InputStream inputStream = githuburl.openStream();
+			Scanner scanner = new Scanner(inputStream);
+			result = scanner.next();
+			scanner.close();
+			inputStream.close();
+			
+		} catch (Exception e) {
+			WorldManager.get().getLogger().error("§cCould not check if a WorldManager Update is available!");
+			e.printStackTrace();
+		}
+		return result;
+		
+		
 	}
 	
 }

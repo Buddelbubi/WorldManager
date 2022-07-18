@@ -40,7 +40,7 @@ public class WorldManager extends PluginBase {
 		
 		CustomMetricsManager.loadMetrics();
 		
-		//Disabling the Auto-Updater is not recommended unless your host disables file downloads.
+		//Disabling the Auto-Updater is not recommended unless your host disables file downloads or your host is blocked from cloudburstmc.org.
 		
 		File file = new File(Server.getInstance().getPluginPath(), "worldmanager.yml");
 		if(file.exists()) {
@@ -49,7 +49,7 @@ public class WorldManager extends PluginBase {
 		
 		Updater.checkAndDoUpdateIfAvailable();
 		
-		Server.getInstance().getLogger().info("§bWorldManager v" + plugin.getDescription().getVersion() + " loaded successfully");
+		Server.getInstance().getLogger().info("§bWorldManager v" + plugin.getDescription().getVersion() + " loaded successfully.");
 		
 	}
 	

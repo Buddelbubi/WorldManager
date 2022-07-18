@@ -16,6 +16,12 @@ private static List<WorldManagerOption> custom = new ArrayList<>();
 	}
 	
 	public static void insertCustom(WorldManagerOption option) {
+
+		for(WorldManagerOption o : custom) if(o.key.equals(option.key))	{
+			WorldManager.get().getLogger().info(option.display + " failed to inject into WorldManager. (Duplicate)");
+			return;
+		}
+		
 		custom.add(option);
 		for(World w : Cache.getWorldCache()) {
 			Config c = w.getConfig();
