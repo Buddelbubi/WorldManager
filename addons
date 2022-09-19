@@ -104,9 +104,8 @@
       "link": "https://cloudburstmc.org/resources/multinether.662/download",
       "author": "PetteriM1",
       "description": "&7MultiNether is a plugin by the plugin developer PetteriM1.\nMultiNether allows you to have multiple nether worlds linked to different overworld worlds.\nJust add world names into the list in config.yml and new nether worlds will be generated for them on next server startup. For all other worlds the default nether world is used.\nThis plugin also adds some improvements to Nukkit's portal creation behavior."
-    }
-  },
-  "WorldFixer": {
+    },
+    "WorldFixer": {
       "link": "https://cloudburstmc.org/resources/worldfixer.63/download",
       "author": "CreeperFace",
       "description": "&7WorldFixer is a plugin by the plugin developer CreeperFace.\nWorldFixer allows you to patch Java Edition 1.13 Maps to work on Nukkit."
