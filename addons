@@ -55,7 +55,7 @@
       "author": "Buddelbubi",
       "description": "&7WorldWhitelist is a plugin by Buddelbubi.\nWith this plugin you can add a Whitelist to your world. The command is /wm whitelist enable/disable/add/remove [player]. To bypass any whitelist, you need the permission 'worldmanager.bypass'"
     },
-    "SWorldEdit": {
+    "SimpleWorldEdit": {
       "link": "https://github.com/Raffa50/NukkitX-SWorldEdit/releases/download/0.1.0.1/SWorldEdit.jar",
       "author": "Raffa50",
       "description": "&7SimpleWorldEdit is a plugin by Raffa50.\n//wand : get the wand to make selections\n//set <blockId> : all blocks inside the selection will be the block with blockid's id\n//expand <#blocks> <up|down|south|north|east|west> : expands the current selection\n//shift <#blocks> <up|down|south|north|east|west> : shifts the current selection."
