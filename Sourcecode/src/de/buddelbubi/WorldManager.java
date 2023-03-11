@@ -3,15 +3,14 @@ package de.buddelbubi;
 import java.io.File;
 
 import cn.nukkit.Server;
-import cn.nukkit.command.Command;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
-import de.buddelbubi.Commands.AliasManager;
-import de.buddelbubi.Commands.WorldManagerCommand;
-import de.buddelbubi.Events.Addons;
-import de.buddelbubi.Events.Events;
-import de.buddelbubi.Events.WorldManagerUI;
+import de.buddelbubi.commands.AliasManager;
+import de.buddelbubi.commands.CommandMapping;
+import de.buddelbubi.listener.Addons;
+import de.buddelbubi.listener.Events;
+import de.buddelbubi.listener.WorldManagerUI;
 import de.buddelbubi.utils.Cache;
 import de.buddelbubi.utils.CustomMetricsManager;
 import de.buddelbubi.utils.LoadWorlds;
@@ -22,18 +21,19 @@ public class WorldManager extends PluginBase {
 
 	protected static Plugin plugin;
 	
+	public static final String prefix = "§3WorldManager §8» §7";
+	
 	public void onEnable() {
 		
 		plugin = this;
 		
-		Command command = new WorldManagerCommand("WorldManager");
-		command.setAliases(new String[] {"wm", "mw", "mv", "levelmanager", "lm"});
-		command.setDescription("The main WorldManager Command");
-		getServer().getCommandMap().register(command.getName(), command);
+		registerCommands();
+		
 		getServer().getPluginManager().registerEvents(new Events(), plugin);
 		getServer().getPluginManager().registerEvents(new WorldManagerUI(), plugin);
 		getServer().getPluginManager().registerEvents(new Addons(), plugin);
 		getServer().getPluginManager().registerEvents(new Cache(), plugin);
+		
 		LoadWorlds.loadWorlds();
 		AliasManager.registerAliases();
 		Addons.initJson();
@@ -49,7 +49,14 @@ public class WorldManager extends PluginBase {
 		
 		Updater.checkAndDoUpdateIfAvailable();
 		
-		Server.getInstance().getLogger().info("§bWorldManager v" + plugin.getDescription().getVersion() + " loaded successfully.");
+		get().getLogger().info("§bWorldManager v" + plugin.getDescription().getVersion() + " loaded successfully.");
+		
+	}
+	
+	private void registerCommands() {
+		
+		CommandMapping command = new CommandMapping();
+		command.register();
 		
 	}
 	

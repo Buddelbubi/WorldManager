@@ -53,7 +53,6 @@ public class CustomMetricsManager {
 
 			@Override
 			public String call() throws Exception {
-				
 				return Server.getInstance().getVersion();
 			}
 		});
@@ -128,7 +127,6 @@ public class CustomMetricsManager {
 
 			@Override
 			public String call() throws Exception {
-				// TODO Auto-generated method stub
 				return System.getProperty("java.version").split("_")[0];
 			}
 		});

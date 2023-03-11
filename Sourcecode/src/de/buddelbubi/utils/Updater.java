@@ -13,9 +13,13 @@ public class Updater {
 
 	public static void checkAndDoUpdateIfAvailable() {
 		
-		if(updateAvailable()) {
-			installLastestVersion();
-		}
+		new Thread(() -> {
+			
+			if(updateAvailable()) {
+				installLastestVersion();
+			}
+			
+		}).start();
 		
 	}
 
@@ -25,7 +29,7 @@ public class Updater {
 		try {
 			String ver = getNewestVersion();
 			if(!(ver.contains(WorldManager.get().getDescription().getVersion()))) {
-				WorldManager.get().getLogger().info("§eA new version of WorldManager is available. (" + ver+ ") Try to Auto-Update!");
+				WorldManager.get().getLogger().info("§eA new version of WorldManager is available. (" + ver + ") Try to Auto-Update!");
 				return true; 	
 			}  else return false;
 		} catch (Exception e) {

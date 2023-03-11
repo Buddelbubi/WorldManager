@@ -1,6 +1,7 @@
 package de.buddelbubi.api;
 
 import java.io.File;
+
 import cn.nukkit.Server;
 import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
@@ -9,7 +10,6 @@ public class World {
 	private String level;
 	private Config config;
 	private boolean loadonstart;
-	private boolean useowngamemode;
 	private int gamemode;
 	private String respawnworld;
 	private String thumbnail;
@@ -41,10 +41,6 @@ public class World {
 	
 	public boolean doesLoadOnStart() {
 		return this.loadonstart;
-	}
-	
-	public boolean isUsingOwnGamemode() {
-		return this.useowngamemode;
 	}
 	
 	public int getOwnGamemode() {
@@ -90,26 +86,16 @@ public class World {
 		this.config.save();
 	}
 	
-	public void setUsingOwnGamemode(boolean usingOwnGamemode) {
-		this.useowngamemode = usingOwnGamemode;
-		this.config.set("UseOwnGamemode", usingOwnGamemode);
-		this.config.save();
-	}
-	
 	public void enableOwnGamemode() {
-		this.useowngamemode = true;
-		this.config.set("UseOwnGamemode", true);
-		this.config.save();
+		setGamemode(4);
 	}
 	
-	public void disableOwnGamemode() {
-		this.useowngamemode = false;
-		this.config.set("UseOwnGamemode", false);
-		this.config.save();
+	public boolean isUsingOwnGamemode() {
+		return (this.gamemode == 4);
 	}
 	
 	public void setGamemode(int gamemode) {
-		if(gamemode < 0 || gamemode > 3) throw new IndexOutOfBoundsException("Unknown Gamemode");
+		if(gamemode < 0 || gamemode > 4) throw new IndexOutOfBoundsException("Unknown Gamemode");
 		this.gamemode = gamemode;
 		this.config.set("Gamemode", gamemode);
 		this.config.save();
@@ -189,13 +175,14 @@ public class World {
 		this.config.save();
 	}
 	
+	
+	
 	public void refreshData() {
 		
 		// If you are using the api, execute this to refresh the data. It may be changed by UI changes or manual config overwrites.
 		
 		this.config = new Config(new File(Server.getInstance().getDataPath() + "/worlds/" + this.getAsLevel().getFolderName(), "config.yml"));
 		this.loadonstart = this.config.getBoolean("LoadOnStart");
-		this.useowngamemode = this.config.getBoolean("UseOwnGamemode");
 		this.gamemode = this.config.getInt("Gamemode");
 		this.protect = this.config.getBoolean("protected");
 		this.fly = this.config.getBoolean("fly");

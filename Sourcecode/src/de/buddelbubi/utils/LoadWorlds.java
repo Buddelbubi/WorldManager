@@ -42,8 +42,8 @@ public class LoadWorlds {
 			
 			if(!c.exists("version")) 	c.set("version", 0);
 			if(!c.exists("LoadOnStart")) 	c.set("LoadOnStart", true);
-			if(!c.exists("UseOwnGamemode"))		c.set("UseOwnGamemode", false);
-			if(!c.exists("Gamemode")) 	c.set("Gamemode", Server.getInstance().getDefaultGamemode());
+			if(c.exists("UseOwnGamemode")) if(!c.getBoolean("UseOwnGamemode")) c.set("Gamemode", 4);
+			if(!c.exists("Gamemode")) 	c.set("Gamemode", 4);
 			if(!c.exists("fly")) 	c.set("fly", false);
 			if(!c.exists("respawnworld")) 	c.set("respawnworld", worldname);
 			if(!c.exists("protected"))		c.set("protected", false);
@@ -58,12 +58,16 @@ public class LoadWorlds {
 			
 			if(c.getBoolean("LoadOnStart")) {
 				
+				try {
 				Level level = Server.getInstance().getLevelByName(f.getName());
-				if(level == null) Server.getInstance().loadLevel(f.getName());
+					if(level == null) Server.getInstance().loadLevel(f.getName());
 				
-				if(!c.exists("thumbnail") ) {
-					c.set("thumbnail", "path::" + ((level.getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (level.getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png"));
-					c.save();
+					if(!c.exists("thumbnail") ) {
+						c.set("thumbnail", "path::" + ((level.getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (level.getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png"));
+						c.save();
+					}
+				} catch (Exception e) {
+					c.set("thumbnail", "path::textures/blocks/grass_side_carried.png");
 				}
 				
 			} else continue;
