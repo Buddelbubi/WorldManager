@@ -18,9 +18,9 @@ import de.buddelbubi.WorldManager;
 public class SyncCommand extends SubCommand{
 
 	public SyncCommand() {
-		super("version");
+		super("sync");
 		this.setAliases(new String[] {
-				"version"
+				"sync"
 		});
 	}
 

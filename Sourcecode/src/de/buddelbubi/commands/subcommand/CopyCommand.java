@@ -48,28 +48,29 @@ public class CopyCommand extends SubCommand {
 
             if (args.length >= 1 && args.length <= 3) {
 
-                Level l = null;
+                Level level = null;
                 String name = null;
-                if (args.length == 1) {
-                    if (sender instanceof Player) {
-                        l = ((Player) sender).getLevel();
-                        name = "CopyOf" + l.getName();
-                    } else {
-                        sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager copy [World] (Name of Copy)*.");
-                        return false;
-                    }
-                } else if (args.length == 2) {
+                
+                if(args.length >= 1) {
 
-                    l = Server.getInstance().getLevelByName(args[1]);
-                    if (l != null)
-                        name = "CopyOf" + l.getName();
+                	for(String arg : args) {
+                		
+                		if(!arg.equalsIgnoreCase("-t")) {
+                			if(level == null) {
+                				level = Server.getInstance().getLevelByName(arg);
+                			} else if(name == null) {
+                				name = arg;
+                			}
+                 		}
+                		
+                	}
+                	
+                	if(level == null && sender instanceof Player) level = ((Player) sender).getLevel();
+                	if(name == null && level != null) name = "CopyOf" + level.getName();
+                	
+                } else sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager copy [World] (Name of Copy)*.");
 
-                } else {
-                    l = Server.getInstance().getLevelByName(args[1]);
-                    name = args[2];
-                }
-
-                if (l != null) {
+                if (level != null) {
 
                     int i = 1;
                     while (new File(Server.getInstance().getDataPath() + "worlds/" + name + (i == 1 ? "" : ("#" + i))).exists()) {
@@ -78,9 +79,22 @@ public class CopyCommand extends SubCommand {
                     if (i != 1) name += (i == 1 ? "" : ("#" + i));
                     new File(Server.getInstance().getDataPath() + "worlds/" + name).mkdir();
 
-                    FileUtils.copyDirectoryContents(new File(Server.getInstance().getDataPath() + "worlds/" + l.getName()), new File(Server.getInstance().getDataPath() + "worlds/" + name));
+                    FileUtils.copyDirectoryContents(new File(Server.getInstance().getDataPath() + "worlds/" + level.getName()), new File(Server.getInstance().getDataPath() + "worlds/" + name));
                     Server.getInstance().loadLevel(name);
-                    sender.sendMessage(WorldManager.prefix + "§7Created a copy of §8" + l.getName() + " §7called §8" + name + ".");
+                    
+                    for(String arg : args) {
+                    	if(arg.equalsIgnoreCase("-t")) {
+           				 	if(sender instanceof Player) {
+               				 	Player player = (Player) sender;
+               				 	player.teleport(Server.getInstance().getLevelByName(name).getSafeSpawn());
+           				 	} else  {
+           					 	sender.sendMessage(WorldManager.prefix + "§cThis parameter is for ingame use only!");
+           				 	}
+           				 	break;
+                    	}
+           		 	}
+
+                    sender.sendMessage(WorldManager.prefix + "§7Created a copy of §8" + level.getName() + " §7called §8" + name + ".");
 
                 } else sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
 

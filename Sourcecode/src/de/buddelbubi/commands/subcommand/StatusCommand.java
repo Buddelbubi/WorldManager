@@ -45,7 +45,6 @@ public class StatusCommand extends SubCommand {
 				 for (World w : Cache.getWorldCache()) message += w.getAsLevel().getName() + ", ";
 				 sender.sendMessage(message);
 
-
 			  }
 		
 		return false;

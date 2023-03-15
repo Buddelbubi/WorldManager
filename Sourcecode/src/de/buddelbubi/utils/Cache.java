@@ -2,6 +2,7 @@ package de.buddelbubi.utils;
 
 import java.util.Collection;
 import java.util.HashMap;
+
 import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
@@ -12,8 +13,9 @@ import de.buddelbubi.api.World;
 
 public class Cache implements Listener {
 	
-	public static HashMap<String, Byte> gamemodes = new HashMap<>();
-	private static HashMap<String, World> worlds = new HashMap<>();
+	public final static HashMap<String, Byte> gamemodes = new HashMap<>();
+	private final static HashMap<String, World> worlds = new HashMap<>();
+
 	
 	public static World getWorld(Level level) {
 		
@@ -47,6 +49,7 @@ public class Cache implements Listener {
 	public static void initWorld(String level) {
 		worlds.put(level, new World(Server.getInstance().getLevelByName(level)));
 	}
+
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler

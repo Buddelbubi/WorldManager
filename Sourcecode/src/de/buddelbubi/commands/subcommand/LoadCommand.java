@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParameter;
@@ -86,7 +87,26 @@ public class LoadCommand extends SubCommand {
                     		
                     	}
                     	
-                        Server.getInstance().loadLevel(args[1]);
+                        boolean loaded = Server.getInstance().loadLevel(args[1]);
+                        if(loaded) {
+                        	 sender.sendMessage(WorldManager.prefix + "§7The world §8" + args[1] + "§7 loaded successfully.");
+                        	 if(sender instanceof Player) {
+                        		 //Checking for the teleport attribute
+                        		 for(String arg : args) {
+                        			 if(arg.equalsIgnoreCase("-t")) {
+                        				 if(sender instanceof Player) {
+	                        				 Player player = (Player) sender;
+	                        				 player.teleport(Server.getInstance().getLevelByName(args[1]).getSafeSpawn());
+                        				 } else  {
+                        					 sender.sendMessage(WorldManager.prefix + "§cThis parameter is for ingame use only!");
+                        				 }
+                        				 break;
+                        			 }
+                        		 }
+                        	 }
+                        } else sender.sendMessage(WorldManager.prefix + "§cThe world §8" + args[1] + "§4failed §cload.");
+                        
+                        
 
                         sender.sendMessage(WorldManager.prefix + "§7The world §8" + args[1] + "§7 loaded successfully.");
 
