@@ -3,6 +3,8 @@ package de.buddelbubi.commands.subcommand;
 import java.io.File;
 import java.util.LinkedList;
 import org.iq80.leveldb.util.FileUtils;
+
+import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
@@ -43,14 +45,18 @@ public class DeleteCommand extends SubCommand {
 
             try {
                 if (args.length == 2) {
-
-                    if (Server.getInstance().getLevelByName(args[1]) != null) {
-
-                        Level l = Server.getInstance().getLevelByName(args[1]);
-                        String name = l.getName();
+                	
+                	String name = args[1];
+                	if(name.equals("-c") && sender instanceof Player) name = ((Player) sender).getLevel().getName(); // with argument to prevent usage on accident
+                    Level l = Server.getInstance().getLevelByName(name);
+                    name = l.getName();
+                    String folder = l.getFolderName();
+                    
+                    if (Server.getInstance().getLevelByName(name) != null) {
+                    	
                         l.unload();
-                        File regionfolder = new File(Server.getInstance().getDataPath() + "worlds/" + name + "/region");
-                        File worldfolder = new File(Server.getInstance().getDataPath() + "worlds/" + name);
+                        File regionfolder = new File(Server.getInstance().getDataPath() + "worlds/" + folder + "/region");
+                        File worldfolder = new File(Server.getInstance().getDataPath() + "worlds/" + folder);
                         FileUtils.deleteDirectoryContents(regionfolder);
                         FileUtils.deleteDirectoryContents(worldfolder);
                         worldfolder.delete();

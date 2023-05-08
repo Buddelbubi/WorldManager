@@ -44,7 +44,10 @@ public class LoadCommand extends SubCommand {
         } else {
 
             if (args.length >= 2) {
-                if (Server.getInstance().getLevelByName(args[1]) == null) {
+            	
+            	String levelname = args[1];
+            	
+                if (Server.getInstance().getLevelByName(levelname) == null) {
 
                 	File levelDat = new File(Server.getInstance().getDataPath() + "worlds/" + args[1] + "/level.dat");
                 	
@@ -72,7 +75,7 @@ public class LoadCommand extends SubCommand {
                     	                    CompoundTag tag = LevelNBT.getLevelData(levelDat);
                     	                    tag.putString("generatorName", args[i+1].toLowerCase());
                     	                    if(!LevelNBT.saveNBT(tag, levelDat)) {
-                    	                    	sender.sendMessage(WorldManager.prefix + "§cFailed to load world §e" + args[1] + " §cwith generator §e" + generator.getName() + ".");
+                    	                    	sender.sendMessage(WorldManager.prefix + "§cFailed to load world §e" + levelname + " §cwith generator §e" + generator.getName() + ".");
                     	                    	return true;
                     	                    }
                     					
@@ -87,28 +90,24 @@ public class LoadCommand extends SubCommand {
                     		
                     	}
                     	
-                        boolean loaded = Server.getInstance().loadLevel(args[1]);
+                        boolean loaded = Server.getInstance().loadLevel(levelname);
                         if(loaded) {
-                        	 sender.sendMessage(WorldManager.prefix + "§7The world §8" + args[1] + "§7 loaded successfully.");
-                        	 if(sender instanceof Player) {
-                        		 //Checking for the teleport attribute
-                        		 for(String arg : args) {
-                        			 if(arg.equalsIgnoreCase("-t")) {
-                        				 if(sender instanceof Player) {
-	                        				 Player player = (Player) sender;
-	                        				 player.teleport(Server.getInstance().getLevelByName(args[1]).getSafeSpawn());
-                        				 } else  {
-                        					 sender.sendMessage(WorldManager.prefix + "§cThis parameter is for ingame use only!");
-                        				 }
-                        				 break;
-                        			 }
-                        		 }
-                        	 }
-                        } else sender.sendMessage(WorldManager.prefix + "§cThe world §8" + args[1] + "§4failed §cload.");
-                        
-                        
-
-                        sender.sendMessage(WorldManager.prefix + "§7The world §8" + args[1] + "§7 loaded successfully.");
+                        	 sender.sendMessage(WorldManager.prefix + "§7The world §8" + levelname + "§7 loaded successfully.");
+             
+                        	 //Checking for the teleport attribute
+                    		 for(String arg : args) {
+                    			 if(arg.equalsIgnoreCase("-t")) {
+                    				 if(sender instanceof Player) {
+                        				 Player player = (Player) sender;
+                        				 player.teleport(Server.getInstance().getLevelByName(levelname).getSafeSpawn());
+                    				 } else  {
+                    					 sender.sendMessage(WorldManager.prefix + "§cThis parameter is for ingame use only!");
+                    				 }
+                    				 break;
+                    			 }
+                    		 }
+                        	 
+                        } else sender.sendMessage(WorldManager.prefix + "§cThe world §8" + levelname + "§4failed §cload.");
 
                     } else sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
 

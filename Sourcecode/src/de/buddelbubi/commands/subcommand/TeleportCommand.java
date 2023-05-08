@@ -1,6 +1,5 @@
 package de.buddelbubi.commands.subcommand;
 
-import java.util.Collections;
 import java.util.LinkedList;
 
 import cn.nukkit.Player;
@@ -38,53 +37,46 @@ public class TeleportCommand extends SubCommand {
 	
 	@Override
 	public boolean execute(CommandSender sender, String arg1, String[] args) {
-		  if (args.length >= 2 && args.length <= 3) {
+		if(sender instanceof Player) {
+			if (args.length >= 1) {
 
-			 if (Server.getInstance().getLevelByName(args[1]) != null) {
-				if (sender instanceof ConsoleCommandSender && args.length != 3) {
-				    sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager teleport [Level] (Player).");
-				    return false;
-				}
-				Level level = Server.getInstance().getLevelByName(args[1]);
-				Player player = null;
-				if (args.length == 2) {
-				    player = ((Player) sender);
-				} else if (args.length == 3) {
-				    try {
-					   if (Server.getInstance().getPlayer(args[2]).isOnline()) {
-						  player = Server.getInstance().getPlayer(args[2]);
-					   } else player = ((Player) sender);
-				    } catch (Exception e) {
-					   sender.sendMessage(WorldManager.prefix + "§cThe player called §e" + args[2] + "§c is not online.");
-					   return false;
-				    }
-				}
-				if (sender.hasPermission("worldmanager.teleport." + level.getFolderName()) || sender.hasPermission("worldmanager.teleport") || sender.hasPermission("worldmanager.admin")) {
-				    player.teleport(level.getSpawnLocation());
-				    level.addSound(level.getSpawnLocation(), Sound.MOB_SHULKER_TELEPORT, 1, 1, Collections.singletonList(player));
-				} else {
-				    sender.sendMessage(WorldManager.prefix + "§cYou dont have the permission to do this..");
-				    return false;
-				}
-				if (!(sender instanceof ConsoleCommandSender)) {
-				    if (player.equals(sender)) {
-					   player.sendMessage(WorldManager.prefix + "§7You got teleported to §8" + level.getFolderName() + ".");
-				    }
-				} else sender.sendMessage(WorldManager.prefix + "§7Teleported §8" + player.getName() + " §7 to §8" + level.getFolderName() + ".");
-			 } else sender.sendMessage(WorldManager.prefix + "§cThe world called §e" + args[1] + "§c does not exist.");
+				 if((args.length == 3 && args[1].equals("-s")) || args.length == 1) {
+					 
+					 if ((sender.hasPermission("worldmanager.teleportui") || sender.hasPermission("worldmanager.admin"))) {
+							WorldManagerUI.openWorldTeleportUI((Player) sender, args.length == 3 ? args[2] : null);
+							return true;
+						 } else {
+							 sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager.teleportui'.");
+							 return true;
+						 }
+					 
+				 }
+				
+				  String world = args[1];
+				  Player player = (Player) sender;
+				  if (Server.getInstance().getLevelByName(world) != null) {
+					if (sender instanceof ConsoleCommandSender) {
+					    sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager teleport [Level]");
+					    return false;
+					}
+					Level level = Server.getInstance().getLevelByName(world);
+					
+					if (sender.hasPermission("worldmanager.teleport." + level.getFolderName()) || sender.hasPermission("worldmanager.teleport") || sender.hasPermission("worldmanager.admin")) {
+					    player.teleport(level.getSpawnLocation());
+					    level.addSound(level.getSpawnLocation(), Sound.MOB_SHULKER_TELEPORT, 1, 1, player);
+					} else {
+					    sender.sendMessage(WorldManager.prefix + "§cYou dont have the permission to do this..");
+					    return false;
+					}
+				
+					    if (player.equals(sender)) {
+						   player.sendMessage(WorldManager.prefix + "§7You got teleported to §8" + level.getFolderName() + ".");
+					    }
+				
+				 } else sender.sendMessage(WorldManager.prefix + "§cThe world called §e" + world + "§c does not exist.");
 
-		  } else {
-
-			 if ((sender.hasPermission("worldmanager.teleportui") || sender.hasPermission("worldmanager.admin")) && args.length == 1 && !(sender instanceof ConsoleCommandSender)) {
-				WorldManagerUI.openWorldTeleportUI((Player) sender);
-				return false;
-			 } else sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager.teleportui'.");
-
-			 if (sender instanceof ConsoleCommandSender && args.length != 3) {
-				sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager teleport [Level] (Player).");
-				return false;
-			 }
-		  }
+			  }
+		} else sender.sendMessage(WorldManager.prefix + "§cThis command can only be executed ingame.");
 		return false;
 	}
 

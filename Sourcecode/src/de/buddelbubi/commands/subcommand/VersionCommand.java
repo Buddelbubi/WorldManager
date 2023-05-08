@@ -10,7 +10,8 @@ public class VersionCommand extends SubCommand{
 	public VersionCommand() {
 		super("version");
 		this.setAliases(new String[] {
-				"version"
+			"version",
+			"ver"
 		});
 	}
 

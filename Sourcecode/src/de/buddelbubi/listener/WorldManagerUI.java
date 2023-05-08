@@ -24,10 +24,12 @@ import de.buddelbubi.utils.Cache;
 
 public class WorldManagerUI implements Listener{
 
-	public static void openWorldTeleportUI(Player p) {
+	
+	public static void openWorldTeleportUI(Player p, String search) {
 		
 		FormWindowSimple fw = new FormWindowSimple("§3WorldManager §8- §cTeleportation UI", "§8Teleport to another level using an UI");
 		for(Level l : Server.getInstance().getLevels().values()) {
+			if(search == null || (search != null && l.getName().toLowerCase().contains(search.toLowerCase())))
 			if(p.hasPermission("worldmanager.teleport") || p.hasPermission("worldmanager.teleport." + l.getName()) || p.hasPermission("worldmanager.admin")) {
 				World w = Cache.getWorld(l);
 				String thumbnail = "path::textures/ui/ErrorGlyph_small_hover.png";

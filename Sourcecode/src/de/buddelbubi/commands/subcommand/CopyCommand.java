@@ -11,7 +11,6 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.level.Level;
-
 import de.buddelbubi.WorldManager;
 
 public class CopyCommand extends SubCommand {
@@ -46,29 +45,58 @@ public class CopyCommand extends SubCommand {
 
         } else {
 
-            if (args.length >= 1 && args.length <= 3) {
 
                 Level level = null;
                 String name = null;
                 
+               
+                
                 if(args.length >= 1) {
 
-                	for(String arg : args) {
+                	for(int i = 0; i < args.length; i++) {
+                		
+                		String arg = args[i];
                 		
                 		if(!arg.equalsIgnoreCase("-t")) {
                 			if(level == null) {
-                				level = Server.getInstance().getLevelByName(arg);
+                				Level l = Server.getInstance().getLevelByName(arg);
+                				if(l == null) {
+                					name = arg;
+                				}
+                				level = l;
                 			} else if(name == null) {
                 				name = arg;
                 			}
                  		}
+                		
+                		if(args[i].equals("-w")) {
+            				
+            				if(args.length >= i+1) {
+            					name = args[i+1];
+            				} else {
+            					sender.sendMessage(WorldManager.prefix + "§cUse /worldmanager copy -w [World] -n [New Name]");
+            					return true;
+            				}
+            				
+            			}
+                		
+                		if(args[i].equals("-n")) {
+            				
+            				if(args.length >= i+1) {
+            					name = args[i+1];
+            				} else {
+            					sender.sendMessage(WorldManager.prefix + "§cUse /worldmanager copy -n [New Name]");
+            					return true;
+            				}
+            				
+            			}
                 		
                 	}
                 	
                 	if(level == null && sender instanceof Player) level = ((Player) sender).getLevel();
                 	if(name == null && level != null) name = "CopyOf" + level.getName();
                 	
-                } else sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager copy [World] (Name of Copy)*.");
+                } else sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager copy (-w [World])* (-n [Name of Copy])* (-t)*.");
 
                 if (level != null) {
 
@@ -98,8 +126,6 @@ public class CopyCommand extends SubCommand {
 
                 } else sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
 
-            } else sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager copy [World]* (Name of Copy).");
-         
         }
         return false;
     }
