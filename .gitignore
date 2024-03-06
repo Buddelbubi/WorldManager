@@ -1,0 +1,9 @@
+/target
+*.class
+.project
+.settings
+.classpath
+.DS_Store
+.idea
+*.iml
+nukkit-1.0-SNAPSHOT.jar
