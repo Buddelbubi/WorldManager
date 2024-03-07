@@ -11,7 +11,6 @@ import de.buddelbubi.listener.WorldManagerUI;
 import de.buddelbubi.utils.Cache;
 import de.buddelbubi.utils.CustomMetricsManager;
 import de.buddelbubi.utils.LoadWorlds;
-import de.buddelbubi.utils.Updater;
 
 import java.io.File;
 
@@ -43,8 +42,8 @@ public class WorldManager extends PluginBase {
 		if(file.exists()) {
 			if(!new Config(file).getBoolean("autoupdate")) return;
 		}
-		
-		Updater.checkAndDoUpdateIfAvailable();
+
+//		Updater.checkAndDoUpdateIfAvailable();
 
 		get().getLogger().info("§bWorldManager v" + plugin.getDescription().getVersion() + " loaded successfully.");
 		
