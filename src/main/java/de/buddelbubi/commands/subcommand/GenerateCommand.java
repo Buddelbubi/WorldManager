@@ -80,8 +80,8 @@ public class GenerateCommand extends SubCommand {
                     } catch (NumberFormatException e) {
                         seed = seedString.hashCode();
                     }
-                    generatorConfig.put(0, new LevelConfig.GeneratorConfig(generator, seed, DimensionEnum.OVERWORLD.getDimensionData(), Collections.emptyMap()));
-                    LevelConfig levelConfig = new LevelConfig("leveldb", generatorConfig);
+                    generatorConfig.put(0, new LevelConfig.GeneratorConfig(generator, seed, false, LevelConfig.AntiXrayMode.LOW, true, DimensionEnum.OVERWORLD.getDimensionData(), Collections.emptyMap()));
+                    LevelConfig levelConfig = new LevelConfig("leveldb", true, generatorConfig);
                     Server.getInstance().generateLevel(name, levelConfig);
                     sender.sendMessage(WorldManager.prefix + "§7The world §8" + name + "§7 got generated.");
                 } catch (Exception e) {

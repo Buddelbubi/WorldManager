@@ -79,8 +79,8 @@ public class RegenerateCommand extends SubCommand {
                 //generate the default world
                 HashMap<Integer, LevelConfig.GeneratorConfig> generatorConfig = new HashMap<>();
                 //spawn seed
-                generatorConfig.put(0, new LevelConfig.GeneratorConfig(generator.getName(), seed, DimensionEnum.OVERWORLD.getDimensionData(), Collections.emptyMap()));
-                LevelConfig levelConfig = new LevelConfig("leveldb", generatorConfig);
+                generatorConfig.put(0, new LevelConfig.GeneratorConfig(generator.getName(), seed, false, LevelConfig.AntiXrayMode.LOW, true, DimensionEnum.OVERWORLD.getDimensionData(), Collections.emptyMap()));
+                LevelConfig levelConfig = new LevelConfig("leveldb", true, generatorConfig);
                 Server.getInstance().generateLevel(name, levelConfig);
 
                 sender.sendMessage(WorldManager.prefix + "§7World §8" + name + " §7regenerated.");

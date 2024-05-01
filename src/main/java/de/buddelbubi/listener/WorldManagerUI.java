@@ -92,8 +92,8 @@ public class WorldManagerUI implements Listener {
                 //generate the default world
                 HashMap<Integer, LevelConfig.GeneratorConfig> generatorConfig = new HashMap<>();
                 //spawn seed
-                generatorConfig.put(0, new LevelConfig.GeneratorConfig(generator, Seed, DimensionEnum.OVERWORLD.getDimensionData(), Collections.emptyMap()));
-                LevelConfig levelConfig = new LevelConfig("leveldb", generatorConfig);
+                generatorConfig.put(0, new LevelConfig.GeneratorConfig(generator, Seed, false, LevelConfig.AntiXrayMode.LOW, true, DimensionEnum.OVERWORLD.getDimensionData(), Collections.emptyMap()));
+                LevelConfig levelConfig = new LevelConfig("leveldb", true, generatorConfig);
                 Server.getInstance().generateLevel(name, levelConfig);
 
                 e.getPlayer().sendMessage(WorldManager.prefix + "§7The world §8" + name + "§7 got generated.");
