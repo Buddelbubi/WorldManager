@@ -15,7 +15,7 @@ import cn.nukkit.level.GameRule;
 import cn.nukkit.level.GameRules;
 import cn.nukkit.level.GameRules.Type;
 import cn.nukkit.level.Level;
-import cn.nukkit.player.info.SpawnPointType;
+import cn.nukkit.network.protocol.types.SpawnPointType;
 import cn.nukkit.utils.Config;
 import de.buddelbubi.WorldManager;
 import de.buddelbubi.api.World;
