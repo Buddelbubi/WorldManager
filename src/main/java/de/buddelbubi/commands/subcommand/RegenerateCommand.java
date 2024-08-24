@@ -69,7 +69,7 @@ public class RegenerateCommand extends SubCommand {
                     locations.put(p.getName(), p.getLocation());
                     p.teleport(Server.getInstance().getDefaultLevel().getSpawnLocation());
                 }
-                
+
                 if (!Server.getInstance().unloadLevel(l, true)) {
                     sender.sendMessage(WorldManager.prefix + "§cFailed to unload the world. Ensure no players are in the world.");
                     return false;
