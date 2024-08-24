@@ -98,7 +98,7 @@ public class ReloadCommand extends SubCommand {
                             }
                         }
 
-                        sender.sendMessage(WorldManager.prefix + "§7The world §8" + args[1] + " §7has been reloaded.");
+                        sender.sendMessage(WorldManager.prefix + "§7The world §8" + name + " §7has been reloaded.");
                     } else {
                         sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
                         return false;
