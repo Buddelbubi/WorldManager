@@ -1,13 +1,37 @@
 package de.buddelbubi.commands;
 
+import java.util.ArrayList;
+
+import java.util.Arrays;
 import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import de.buddelbubi.WorldManager;
-import de.buddelbubi.commands.subcommand.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import de.buddelbubi.commands.subcommand.AddonCommand;
+import de.buddelbubi.commands.subcommand.ClearlagCommand;
+import de.buddelbubi.commands.subcommand.CopyCommand;
+import de.buddelbubi.commands.subcommand.DeleteCommand;
+import de.buddelbubi.commands.subcommand.GameruleCommand;
+import de.buddelbubi.commands.subcommand.GenerateCommand;
+import de.buddelbubi.commands.subcommand.HelpCommand;
+import de.buddelbubi.commands.subcommand.InfoCommand;
+import de.buddelbubi.commands.subcommand.LoadCommand;
+import de.buddelbubi.commands.subcommand.ListCommand;
+import de.buddelbubi.commands.subcommand.RegenerateCommand;
+import de.buddelbubi.commands.subcommand.ReloadCommand;
+import de.buddelbubi.commands.subcommand.RenameCommand;
+import de.buddelbubi.commands.subcommand.SaveCommand;
+import de.buddelbubi.commands.subcommand.SetdefaultCommand;
+import de.buddelbubi.commands.subcommand.SetseedCommand;
+import de.buddelbubi.commands.subcommand.SetspawnCommand;
+import de.buddelbubi.commands.subcommand.SettingsCommand;
+import de.buddelbubi.commands.subcommand.SpawnCommand;
+import de.buddelbubi.commands.subcommand.StatusCommand;
+import de.buddelbubi.commands.subcommand.SubCommand;
+import de.buddelbubi.commands.subcommand.SyncCommand;
+import de.buddelbubi.commands.subcommand.TeleportCommand;
+import de.buddelbubi.commands.subcommand.UnloadCommand;
+import de.buddelbubi.commands.subcommand.VersionCommand;
 
 public class CommandMapping extends Command {
 
@@ -70,6 +94,7 @@ public class CommandMapping extends Command {
 				new SaveCommand(),
 				new VersionCommand(),
 				new SyncCommand(),
+				new AddonCommand(),
 				new SpawnCommand(),
 				new StatusCommand(),
 				new HelpCommand()

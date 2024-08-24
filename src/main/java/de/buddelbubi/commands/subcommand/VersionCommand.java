@@ -1,10 +1,9 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.util.LinkedList;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParameter;
 import de.buddelbubi.WorldManager;
-
-import java.util.LinkedList;
 
 public class VersionCommand extends SubCommand{
 

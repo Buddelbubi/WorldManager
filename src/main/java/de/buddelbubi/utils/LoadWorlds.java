@@ -1,13 +1,14 @@
 package de.buddelbubi.utils;
 
+import java.io.File;
+
+
+import java.io.IOException;
 import cn.nukkit.Server;
 import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
 import de.buddelbubi.WorldManager;
 import de.buddelbubi.api.WorldManagerOption;
-
-import java.io.File;
-import java.io.IOException;
 
 public class LoadWorlds {
 
@@ -60,11 +61,6 @@ public class LoadWorlds {
 				try {
 				Level level = Server.getInstance().getLevelByName(f.getName());
 					if(level == null) Server.getInstance().loadLevel(f.getName());
-				
-					if(!c.exists("thumbnail") ) {
-						c.set("thumbnail", "path::" + ((level.getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (level.getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png"));
-						c.save();
-					}
 				} catch (Exception e) {
 					c.set("thumbnail", "path::textures/blocks/grass_side_carried.png");
 				}

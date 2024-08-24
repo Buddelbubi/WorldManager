@@ -1,5 +1,10 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
@@ -17,11 +22,6 @@ import de.buddelbubi.WorldManager;
 import de.buddelbubi.api.World;
 import de.buddelbubi.api.WorldManagerOption;
 import de.buddelbubi.utils.Cache;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class SettingsCommand extends SubCommand{
 
@@ -47,12 +47,12 @@ public class SettingsCommand extends SubCommand{
 	public boolean execute(CommandSender sender, String arg1, String[] args) {
 		
 		if (sender instanceof ConsoleCommandSender) {
-			sender.sendMessage(WorldManager.prefix + "§cThis can only be done ingame.");
+			 sender.sendMessage(WorldManager.prefix + "§cThis can only be done ingame.");
 			 return false;
 		  }
 		  if (!sender.hasPermission("worldmanager.admin") && !sender.hasPermission("worldmanager.settings")) {
 
-			  sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager.settings'.");
+			 sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager.settings'.");
 			 return false;
 
 		  } else {
@@ -64,14 +64,14 @@ public class SettingsCommand extends SubCommand{
 					if (Server.getInstance().getLevelByName(args[1]) != null) {
 					   l = Server.getInstance().getLevelByName(args[1]);
 					} else {
-						sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
+					   sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
 					   return false;
 				    }
 				}
 				World w = Cache.getWorld(l);
 				List < String > worlds = new ArrayList < > ();
 				for (Level level : Server.getInstance().getLevels().values()) worlds.add(level.getName());
-				 FormWindowCustom fw = new FormWindowCustom("§3WorldSettings - " + l.getFolderName());
+				FormWindowCustom fw = new FormWindowCustom("§3WorldSettings - " + l.getFolderName());
 				fw.addElement(new ElementToggle("Load On Start", w.doesLoadOnStart()));
 				fw.addElement(new ElementDropdown("Gamemode", Arrays.asList("Survival", "Creative", "Adventure", "Spectator", "None"), w.getOwnGamemode()));
 				fw.addElement(new ElementToggle("Fly", w.isFlyAllowed()));

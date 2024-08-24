@@ -1,5 +1,8 @@
 package de.buddelbubi.utils;
 
+import java.util.Collection;
+import java.util.HashMap;
+
 import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
@@ -7,9 +10,6 @@ import cn.nukkit.event.level.LevelUnloadEvent;
 import cn.nukkit.level.Level;
 import de.buddelbubi.WorldManager;
 import de.buddelbubi.api.World;
-
-import java.util.Collection;
-import java.util.HashMap;
 
 public class Cache implements Listener {
 	

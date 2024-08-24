@@ -1,10 +1,10 @@
 package de.buddelbubi.api;
 
+import java.io.File;
+
 import cn.nukkit.Server;
 import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
-
-import java.io.File;
 
 public class World {
 	private String level;
@@ -187,7 +187,11 @@ public class World {
 		this.protect = this.config.getBoolean("protected");
 		this.fly = this.config.getBoolean("fly");
 		this.respawnworld = this.config.getString("respawnworld");
-		this.thumbnail = this.config.getString("thumbnail");
+		try {
+			this.thumbnail = this.config.getString("thumbnail");
+		} catch (Exception e) {
+			this.thumbnail = "path::textures/blocks/grass_side_carried.png";
+		}
 		this.note = this.config.getString("note");
 		
 	}

@@ -1,5 +1,7 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.util.LinkedList;
+
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
@@ -7,9 +9,8 @@ import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.level.Level;
-import de.buddelbubi.WorldManager;
 
-import java.util.LinkedList;
+import de.buddelbubi.WorldManager;
 
 public class ClearlagCommand extends SubCommand {
 
@@ -36,7 +37,7 @@ public class ClearlagCommand extends SubCommand {
 		
 		  if (!sender.hasPermission("worldmanager.admin") && !sender.hasPermission("worldmanager.killentitys") && !sender.hasPermission("worldmanager.clearlag")) {
 
-              sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager.clearlag'.");
+			 sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager.clearlag'.");
 			 return false;
 
 		  } else {
@@ -44,7 +45,7 @@ public class ClearlagCommand extends SubCommand {
 			 if (args.length == 1) {
 				if (sender instanceof Player) {
 				    l = ((Player) sender).getLevel();
-                } else sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager clearlag [World]*.");
+				} else sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager clearlag [World]*.");
 			 } else
 			 if (args.length == 2) {
 				if (Server.getInstance().getLevelByName(args[1]) != null) {
@@ -52,11 +53,11 @@ public class ClearlagCommand extends SubCommand {
 				    l = Server.getInstance().getLevelByName(args[1]);
 
 				} else {
-                    sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
+				    sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
 				    return false;
 				}
 
-             } else sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager clearlag [World]*.");
+			 } else sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager clearlag [World]*.");
 			 int count = 0;
 			 for (Entity entity : l.getEntities()) {
 				 
@@ -66,7 +67,7 @@ public class ClearlagCommand extends SubCommand {
 				}
 				
 			 }
-              sender.sendMessage(WorldManager.prefix + "§7Killed " + count + " entitys in §8" + l.getName() + ".");
+			 sender.sendMessage(WorldManager.prefix + "§7Killed " + count + " entitys in §8" + l.getName() + ".");
 		  }
 		return false;
 	}

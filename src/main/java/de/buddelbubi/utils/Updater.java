@@ -1,7 +1,5 @@
 package de.buddelbubi.utils;
 
-import de.buddelbubi.WorldManager;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +7,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
+import de.buddelbubi.WorldManager;
+import de.buddelbubi.listener.Addons;
 
 public class Updater {
 
@@ -59,22 +59,12 @@ public class Updater {
 	public static String getNewestVersion() {
 		
 		String result = WorldManager.get().getDescription().getVersion(); //in case something goes wrong.
-		
 		try {
-			URL githuburl = new URL("https://raw.githubusercontent.com/Buddelbubi/WorldManager/main/version");
-			InputStream inputStream = githuburl.openStream();
-			Scanner scanner = new Scanner(inputStream);
-			result = scanner.next();
-			scanner.close();
-			inputStream.close();
-			
+			result = Addons.json.get("version").getAsString();
 		} catch (Exception e) {
 			WorldManager.get().getLogger().error("§cCould not check if a WorldManager Update is available!");
 			e.printStackTrace();
 		}
 		return result;
-		
-		
 	}
-	
 }

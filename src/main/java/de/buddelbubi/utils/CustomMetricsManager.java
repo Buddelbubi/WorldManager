@@ -1,15 +1,14 @@
 package de.buddelbubi.utils;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.Callable;
 import cn.nukkit.Server;
 import de.buddelbubi.WorldManager;
 import de.buddelbubi.utils.Metrics.DrilldownPie;
 import de.buddelbubi.utils.Metrics.SimplePie;
 import de.buddelbubi.utils.Metrics.SingleLineChart;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class CustomMetricsManager {
 	
@@ -65,6 +64,15 @@ public class CustomMetricsManager {
 				return Server.getInstance().getNukkitVersion();
 			}
 		});
+
+		SimplePie serverSoftware = new SimplePie("serverSoftware", new Callable<String>() {
+
+			@Override
+			public String call() throws Exception {
+				return Server.getInstance().getName();
+			}
+		});
+
 		SimplePie xboxAuth = new SimplePie("onlineMode", new Callable<String>() {
 
 			@Override
@@ -145,6 +153,7 @@ public class CustomMetricsManager {
 		metrics.addCustomChart(os);
 		metrics.addCustomChart(serverLocation);
 		metrics.addCustomChart(javaVersion);
+		metrics.addCustomChart(serverSoftware);
 		
 	}
 	

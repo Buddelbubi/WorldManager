@@ -1,5 +1,11 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
+
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
@@ -9,8 +15,6 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.math.Vector3f;
 import de.buddelbubi.WorldManager;
-
-import java.util.*;
 
 public class ReloadCommand extends SubCommand {
 
@@ -75,6 +79,7 @@ public class ReloadCommand extends SubCommand {
                 } else {
                     if (Server.getInstance().getLevelByName(args[1]) != null) {
                         String name = args[1];
+                        if(name.equals("-c") && sender instanceof Player) name = ((Player) sender).getLevel().getName();
                         if (Server.getInstance().getDefaultLevel().getName().equalsIgnoreCase(name)) {
                             sender.sendMessage(WorldManager.prefix + "§cYou cannot reload the default world.");
                             return false;
@@ -94,7 +99,7 @@ public class ReloadCommand extends SubCommand {
                         		player.teleport(loc);
                         	}
                         }
-
+                        
                         sender.sendMessage(WorldManager.prefix + "§7The world §8" + args[1] + " §7has been reloaded.");
                     } else {
                         sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");

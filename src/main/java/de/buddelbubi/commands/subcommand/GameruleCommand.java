@@ -1,5 +1,6 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.util.LinkedList;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
@@ -11,8 +12,6 @@ import cn.nukkit.form.window.FormWindowCustom;
 import cn.nukkit.level.GameRule;
 import cn.nukkit.level.Level;
 import de.buddelbubi.WorldManager;
-
-import java.util.LinkedList;
 
 public class GameruleCommand extends SubCommand{
 
@@ -38,12 +37,12 @@ public class GameruleCommand extends SubCommand{
 	public boolean execute(CommandSender sender, String arg1, String[] args) {
 		
 		  if (!(sender instanceof Player)) {
-			  sender.sendMessage(WorldManager.prefix + "§cThis command can only be used ingame.");
+			 sender.sendMessage(WorldManager.prefix + "§cThis command can only be used ingame.");
 			 return false;
 		  }
 
 		  if (!sender.hasPermission("worldmanager.admin") && !sender.hasPermission("worldmanager.gamerule") && !sender.hasPermission("worldmanager.gamerule." + args[1])) {
-			  sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager." + args[0] + (args.length == 2 ? args[1] : "") + "'");
+			 sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager." + args[0] + (args.length == 2 ? args[1] : "") + "'");
 			 return false;
 		  }
 
@@ -57,16 +56,16 @@ public class GameruleCommand extends SubCommand{
 				l = Server.getInstance().getLevelByName(args[1]);
 
 			 } else {
-				 sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
+				sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
 				return false;
 			 }
 
 		  } else {
-			  sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager gamerule [World]*.");
+			 sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager gamerule [World]*.");
 			 return false;
 		  }
 
-		FormWindowCustom c = new FormWindowCustom("§3WorldGamerules - " + l.getFolderName());
+		  FormWindowCustom c = new FormWindowCustom("§3WorldGamerules - " + l.getFolderName());
 		  for (GameRule r : GameRule.values()) {
 			 switch (l.getGameRules().getGameRuleType(r)) {
 

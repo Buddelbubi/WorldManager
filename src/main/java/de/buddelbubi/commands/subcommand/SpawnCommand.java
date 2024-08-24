@@ -1,11 +1,10 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.util.LinkedList;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParameter;
 import de.buddelbubi.WorldManager;
-
-import java.util.LinkedList;
 
 public class SpawnCommand extends SubCommand{
 
@@ -38,7 +37,7 @@ public class SpawnCommand extends SubCommand{
 			 if (sender instanceof Player) {
 
 				((Player) sender).teleport(((Player) sender).getLevel().getSafeSpawn());
-				 sender.sendMessage(WorldManager.prefix + "§7Successfully teleported to spawn.");
+				sender.sendMessage(WorldManager.prefix + "§7Successfully teleported to spawn.");
 
 			 } else sender.sendMessage(WorldManager.prefix + "§cThis command can only be executed ingame.");
 

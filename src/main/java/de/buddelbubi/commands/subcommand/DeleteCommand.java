@@ -1,5 +1,9 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.io.File;
+import java.util.LinkedList;
+import org.iq80.leveldb.util.FileUtils;
+
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
@@ -7,10 +11,6 @@ import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.level.Level;
 import de.buddelbubi.WorldManager;
-import org.iq80.leveldb.util.FileUtils;
-
-import java.io.File;
-import java.util.LinkedList;
 
 public class DeleteCommand extends SubCommand {
 

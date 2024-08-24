@@ -19,13 +19,13 @@ public class AliasManager extends Command {
 		for(String s : arg2) args = args + " " + s;
 		
 		if(arg1.toLowerCase().matches("world|mvtp|unitp|wmtp|lmtp")) {
-			Server.getInstance().executeCommand(arg0, "wm tp" + args);
+			Server.getInstance().dispatchCommand(arg0, "wm tp" + args); 
 		} else if(arg1.toLowerCase().matches("mvimport|mvload|uniload|mvimport")) {
-			Server.getInstance().executeCommand(arg0, "wm load" + args);
+			Server.getInstance().dispatchCommand(arg0, "wm load" + args); 
 		} else if(arg1.equalsIgnoreCase("mvedit")){
-			Server.getInstance().executeCommand(arg0, "wm gamerule" + args);
+			Server.getInstance().dispatchCommand(arg0, "wm gamerule" + args); 
 		} else if(arg1.equalsIgnoreCase("worlds")) {
-			Server.getInstance().executeCommand(arg0, "wm list");
+			Server.getInstance().dispatchCommand(arg0, "wm list"); 
 		}
 		return true;
 	}

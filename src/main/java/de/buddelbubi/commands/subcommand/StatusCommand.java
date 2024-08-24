@@ -1,13 +1,12 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.util.LinkedList;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParameter;
 import de.buddelbubi.WorldManager;
 import de.buddelbubi.api.World;
 import de.buddelbubi.utils.Cache;
 import de.buddelbubi.utils.Updater;
-
-import java.util.LinkedList;
 
 public class StatusCommand extends SubCommand {
 
@@ -32,17 +31,17 @@ public class StatusCommand extends SubCommand {
 		
 		  if (!sender.hasPermission("worldmanager.admin") && !sender.hasPermission("worldmanager.status")) {
 
-			  sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager." + args[0] + "'.");
+				 sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager." + args[0] + "'.");
 				 return false;
 
 			  } else {
 
-			  String message = "§l§3WorldManager §eStatus\n§r";
-			  message += ("§ePlugin Version: §7" + WorldManager.get().getDescription().getVersion() + "\n");
-			  message += ("§eNewest Version: §7" + Updater.getNewestVersion() + "\n");
-			  message += ("§eCached Worlds: §7" + Cache.getWorldCache().size() + "\n");
-			  message += ("§eCached Players: §7" + Cache.getCachedPlayerGamemodes() + "\n");
-			  message += "§eWorlds: §7";
+				 String message = "§l§3WorldManager §eStatus\n§r";
+				 message += ("§ePlugin Version: §7" + WorldManager.get().getDescription().getVersion() + "\n");
+				 message += ("§eNewest Version: §7" + Updater.getNewestVersion() + "\n");
+				 message += ("§eCached Worlds: §7" + Cache.getWorldCache().size() + "\n");
+				 message += ("§eCached Players: §7" + Cache.getCachedPlayerGamemodes() + "\n");
+				 message += "§eWorlds: §7";
 				 for (World w : Cache.getWorldCache()) message += w.getAsLevel().getName() + ", ";
 				 sender.sendMessage(message);
 

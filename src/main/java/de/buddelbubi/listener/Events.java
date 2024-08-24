@@ -1,5 +1,10 @@
 package de.buddelbubi.listener;
 
+import java.io.File;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
@@ -8,25 +13,23 @@ import cn.nukkit.event.block.BlockBreakEvent;
 import cn.nukkit.event.block.BlockPlaceEvent;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.level.LevelLoadEvent;
-import cn.nukkit.event.player.*;
+import cn.nukkit.event.player.PlayerDeathEvent;
+import cn.nukkit.event.player.PlayerFormRespondedEvent;
+import cn.nukkit.event.player.PlayerGameModeChangeEvent;
+import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.event.player.PlayerInteractEvent.Action;
+import cn.nukkit.event.player.PlayerRespawnEvent;
+import cn.nukkit.event.player.PlayerTeleportEvent;
 import cn.nukkit.form.window.FormWindowCustom;
 import cn.nukkit.level.GameRule;
 import cn.nukkit.level.GameRules;
 import cn.nukkit.level.GameRules.Type;
 import cn.nukkit.level.Level;
-import cn.nukkit.player.info.SpawnPointType;
 import cn.nukkit.utils.Config;
 import de.buddelbubi.WorldManager;
 import de.buddelbubi.api.World;
 import de.buddelbubi.api.WorldManagerOption;
 import de.buddelbubi.utils.Cache;
-import it.unimi.dsi.fastutil.Pair;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class Events implements Listener {
 
@@ -49,11 +52,10 @@ public class Events implements Listener {
         if (!c.exists("Gamemode")) c.set("Gamemode", 4);
         if (!c.exists("fly")) c.set("fly", false);
         if (!c.exists("respawnworld")) c.set("respawnworld", e.getLevel().getName());
-        if (!c.exists("thumbnail"))
-            c.set("thumbnail", "path::" + ((e.getLevel().getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (e.getLevel().getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png"));
+        if (!c.exists("thumbnail")) c.set("thumbnail", "path::" + ((e.getLevel().getDimension() == 0) ? "textures/blocks/grass_side_carried.png" : (e.getLevel().getDimension() == 1) ? "textures/blocks/netherrack.png" : "textures/blocks/end_stone.png"));
         if (!c.exists("protected")) c.set("protected", false);
         if (!c.exists("note")) c.set("note", "");
-        for (WorldManagerOption option : WorldManagerOption.getCustomOptions()) {
+        for (WorldManagerOption option: WorldManagerOption.getCustomOptions()) {
             if (!c.exists(option.getKey())) {
                 c.set(option.getKey(), option.getValue());
             }
@@ -62,10 +64,10 @@ public class Events implements Listener {
         c.save();
 
         try {
-            Cache.initWorld(e.getLevel());
-        } catch (Exception e2) {
-            WorldManager.get().getLogger().warning("Failed to load all worlds in cache!");
-        }
+        	Cache.initWorld(e.getLevel());
+		} catch (Exception e2) {
+			WorldManager.get().getLogger().warning("Failed to load all worlds in cache!");
+		}
 
     }
 
@@ -73,10 +75,10 @@ public class Events implements Listener {
     @EventHandler
     public void onTeleport(PlayerTeleportEvent e) {
 
-        Player p = e.getPlayer();
-
-        if (e.getTo().getLevel() == null || e.getFrom().getLevel() == null) return;
-
+    	Player p = e.getPlayer();
+    	
+    	if(e.getTo().getLevel() == null || e.getFrom().getLevel() == null) return;
+    	
         World world = Cache.getWorld(e.getTo().getLevel());
         if (p.hasPermission("worldmanager.deny." + e.getTo().getLevel()) && !e.getPlayer().hasPermission("*")) {
             e.setCancelled(true);
@@ -100,32 +102,28 @@ public class Events implements Listener {
 
     }
 
-    HashMap<String, String> respawnworld = new HashMap<>();
+    HashMap < String, String > respawnworld = new HashMap < > ();
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
+
         respawnworld.put(e.getEntity().getName(), Cache.getWorld(e.getEntity().getLevel()).getRespawnWorld());
+
     }
 
-    @EventHandler
-    public void onDeath(PlayerJoinEvent e) {
-        if (e.getPlayer().getGamemode() != 1) {
-            World world = Cache.getWorld(e.getPlayer().getSpawn().first().getLevel());
-            e.getPlayer().setAllowFlight(world.isFlyAllowed());
-        }
-    }
-
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
-        World world = Cache.getWorld(e.getRespawnPosition().first().getLevel());
-        if (world == null) return;
+        World world = Cache.getWorld(e.getRespawnPosition().getLevel());
+        if (e.isFirstSpawn() && e.getPlayer().getGamemode() != 1) e.getPlayer().setAllowFlight(world.isFlyAllowed());
+
         if (respawnworld.containsKey(e.getPlayer().getName())) {
             Level l = Server.getInstance().getLevelByName(respawnworld.get(e.getPlayer().getName()));
 
             if (l != null) {
-                if (e.getPlayer().getSpawn().first().getLevel().getId() == l.getId()) {
+                if (e.getPlayer().getSpawn().getLevel().getId() == l.getId()) {
                     e.setRespawnPosition(e.getPlayer().getSpawn());
-                } else e.setRespawnPosition(Pair.of(l.getSafeSpawn(), SpawnPointType.WORLD));
+                } else e.setRespawnPosition(l.getSafeSpawn());
             }
             respawnworld.remove(e.getPlayer().getName());
         }
@@ -168,14 +166,14 @@ public class Events implements Listener {
                 }
                 c.save();
 
-                for (Player p : Server.getInstance().getLevelByName(level).getPlayers().values()) {
+                for (Player p: Server.getInstance().getLevelByName(level).getPlayers().values()) {
                     if (p.getGamemode() != 1) {
                         p.setAllowFlight(c.getBoolean("fly"));
                     }
                 }
 
                 if (c.getInt("Gamemode") != 4)
-                    for (Player p : Server.getInstance().getLevelByName(level).getPlayers().values())
+                    for (Player p: Server.getInstance().getLevelByName(level).getPlayers().values())
                         if (p.getGamemode() != c.getInt("Gamemode")) {
                             Cache.gamemodes.put(p.getName(), (byte) p.getGamemode());
                             p.setGamemode(c.getInt("Gamemode"));
@@ -192,7 +190,7 @@ public class Events implements Listener {
                     e.getPlayer().sendMessage(WorldManager.prefix + "§7Didn't save gamerules for §8" + level.getName());
                     return;
                 }
-                for (GameRule r : GameRule.values()) {
+                for (GameRule r: GameRule.values()) {
                     if (fw.getResponse().getResponses().get(i) instanceof Boolean) {
                         gamerules.setGameRule(r, fw.getResponse().getToggleResponse(i));
                     } else if (level.getGameRules().getGameRuleType(r) == Type.INTEGER) {
@@ -218,12 +216,12 @@ public class Events implements Listener {
                     Level level = Server.getInstance().getLevelByName(fw.getTitle().split(" - ")[1]);
                     Config c = Cache.getWorld(level).getConfig();
                     int i = 1;
-                    for (Level l : Server.getInstance().getLevels().values()) {
+                    for (Level l: Server.getInstance().getLevels().values()) {
                         if (l == level) continue;
                         if (fw.getResponse().getToggleResponse(i)) {
 
                             Config c2 = Cache.getWorld(l).getConfig();
-                            c2.setAll((LinkedHashMap<String, Object>) c.getAll());
+                            c2.setAll((LinkedHashMap < String, Object > ) c.getAll());
                             c2.save();
                             l.gameRules = level.gameRules;
                             Cache.initWorld(l);
@@ -249,8 +247,7 @@ public class Events implements Listener {
             if (!(e.getEntity() instanceof Player) && e.getDamager() instanceof Player && world.isProtected()) {
                 e.setCancelled(true);
             }
-        } catch (Exception e2) {
-        }
+        } catch (Exception e2) {}
 
     }
 
@@ -273,7 +270,6 @@ public class Events implements Listener {
             e2.printStackTrace();
         }
     }
-
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
 

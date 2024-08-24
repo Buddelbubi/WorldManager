@@ -1,5 +1,9 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
@@ -10,10 +14,6 @@ import cn.nukkit.form.element.ElementToggle;
 import cn.nukkit.form.window.FormWindowCustom;
 import cn.nukkit.level.Level;
 import de.buddelbubi.WorldManager;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class SyncCommand extends SubCommand{
 
@@ -51,8 +51,8 @@ public class SyncCommand extends SubCommand{
 
 				    if (Server.getInstance().getLevelByName(levelname) != null) {
 
-						FormWindowCustom fw = new FormWindowCustom("§3WorldSync - " + levelname);
-						fw.addElement(new ElementLabel("§7Select the worlds you want to sync with §e" + levelname + "§7. This includes WorldSettings and Gamerules."));
+					   FormWindowCustom fw = new FormWindowCustom("§3WorldSync - " + levelname);
+					   fw.addElement(new ElementLabel("§7Select the worlds you want to sync with §e" + levelname + "§7. This includes WorldSettings and Gamerules."));
 					   List <Level> level = new ArrayList <> (Server.getInstance().getLevels().values());
 					   level.remove(Server.getInstance().getLevelByName(levelname));
 					   
@@ -61,7 +61,7 @@ public class SyncCommand extends SubCommand{
 					   ((Player) sender).showFormWindow(fw);
 
 				    } else {
-						sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
+					   sender.sendMessage(WorldManager.prefix + "§cThis world does not exist.");
 					   return false;
 				    }
 
@@ -69,8 +69,7 @@ public class SyncCommand extends SubCommand{
 
 			 } else sender.sendMessage(WorldManager.prefix + "§cThis command can only be executed ingame.");
 
-		} else
-			sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager." + args[0] + "'.");
+		  } else sender.sendMessage(WorldManager.prefix + "§cYou are lacking the permission §e'worldmanager." + args[0] + "'.");
 		
 		  return false;
 	}

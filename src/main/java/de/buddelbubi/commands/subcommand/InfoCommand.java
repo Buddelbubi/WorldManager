@@ -1,5 +1,6 @@
 package de.buddelbubi.commands.subcommand;
 
+import java.util.LinkedList;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
@@ -10,8 +11,6 @@ import cn.nukkit.level.Level;
 import de.buddelbubi.WorldManager;
 import de.buddelbubi.api.World;
 import de.buddelbubi.utils.Cache;
-
-import java.util.LinkedList;
 
 public class InfoCommand extends SubCommand {
 
@@ -60,15 +59,15 @@ public class InfoCommand extends SubCommand {
             } else sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager info [World].");
             World world = Cache.getWorld(l);
             String str = "§7Name: §8" + l.getFolderName() + "\n" +
-                    "§7Spawn: §8" + l.getSpawnLocation().x + ", " + l.getSpawnLocation().y + ", " + l.getSpawnLocation().z + "\n" +
-                    "§7Generator: §8" + l.getGenerator().getName() + "\n" +
-                    "§7Chunks: §8" + l.getChunks().size() + "\n" +
-                    "§7Dimension: §8" + ((l.getDimension() == 0) ? "Overworld" : (l.getDimension() == 1 ? "Nether" : "End")) + "\n" +
-                    "§7Seed: §8" + l.getSeed() + "\n" +
-                    "§7Players: §8" + l.getPlayers().size() + "\n" +
-                    "§7Entitys: §8" + l.getEntities().length + "\n" +
-                    "§7Block Entitys: §8" + l.getBlockEntities().size() + "\n" +
-                    "§7Note: §8" + (world.getNote().equals("") ? "§cNone" : world.getNote());
+                "§7Spawn: §8" + l.getSpawnLocation().x + ", " + l.getSpawnLocation().y + ", " + l.getSpawnLocation().z + "\n" +
+                "§7Generator: §8" + l.getGenerator().getName() + "\n" +
+                "§7Chunks: §8" + l.getChunks().size() + "\n" +
+                "§7Dimension: §8" + ((l.getDimension() == 0) ? "Overworld" : (l.getDimension() == 1 ? "Nether" : "End")) + "\n" +
+                "§7Seed: §8" + l.getSeed() + "\n" +
+                "§7Players: §8" + l.getPlayers().size() + "\n" +
+                "§7Entitys: §8" + l.getEntities().length + "\n" +
+                "§7Block Entitys: §8" + l.getBlockEntities().size() + "\n" +
+                "§7Note: §8" + (world.getNote().equals("") ? "§cNone" : world.getNote());
             sender.sendMessage(WorldManager.prefix + "§7Information about §8" + l.getFolderName() + "\n" + str);
 
         }
