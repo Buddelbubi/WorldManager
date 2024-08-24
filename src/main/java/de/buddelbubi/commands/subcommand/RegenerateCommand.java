@@ -1,7 +1,11 @@
 package de.buddelbubi.commands.subcommand;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
+
+import cn.nukkit.event.player.PlayerTeleportEvent;
+import cn.nukkit.level.Location;
 import org.iq80.leveldb.util.FileUtils;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -60,8 +64,13 @@ public class RegenerateCommand extends SubCommand {
                 long seed = l.getSeed();
                 Generator generator = l.getGenerator();
                 String name = l.getFolderName();
-
-                if (!Server.getInstance().unloadLevel(l)) {
+                HashMap<String, Location> locations = new HashMap<>();
+                for(Player p : l.getPlayers().values()) {
+                    locations.put(p.getName(), p.getLocation());
+                    p.teleport(Server.getInstance().getDefaultLevel().getSpawnLocation());
+                }
+                
+                if (!Server.getInstance().unloadLevel(l, true)) {
                     sender.sendMessage(WorldManager.prefix + "§cFailed to unload the world. Ensure no players are in the world.");
                     return false;
                 }
@@ -78,6 +87,13 @@ public class RegenerateCommand extends SubCommand {
                 }
 
                 Server.getInstance().generateLevel(name, seed, generator.getClass());
+                l = Server.getInstance().getLevelByName(name);
+                for(String s : locations.keySet()) {
+                    Player p = Server.getInstance().getPlayer(s);
+                    Location loc = locations.get(s);
+                    loc.setLevel(l);
+                    p.teleport(loc);
+                }
                 sender.sendMessage(WorldManager.prefix + "§7World §8" + name + " §7regenerated.");
             } else {
                 sender.sendMessage(WorldManager.prefix + "§cDo /worldmanager regenerate [World].");
